@@ -5,7 +5,8 @@ import { RevenueCategoriesChartComponent } from './revenue-categories-chart/reve
 import { RevenueIntensityChartComponent } from './revenue-intensity-chart/revenue-intensity-chart.component';
 import { EveryDayFactsTableComponent } from './every-day-facts-table/every-day-facts-table.component';
 import { RevenueAnalysisComponent } from './revenue-analysis.component';
-
+import { RouterModule } from '@angular/router';
+import { routes } from './revenue-analysis.routing.module';
 @NgModule({
   declarations: [
     FiltersComponent,
@@ -14,6 +15,6 @@ import { RevenueAnalysisComponent } from './revenue-analysis.component';
     EveryDayFactsTableComponent,
     RevenueAnalysisComponent,
   ],
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule.forChild(routes)],
 })
 export class RevenueAnalysisModule {}
