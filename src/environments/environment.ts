@@ -3,7 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  aggregatedFactsWithDimensionsAndFilters:
+    'https://www.optio.ai/api/v2/analytics/transactions/facts/aggregate',
+  factsWithDimensionsAndFiltersByDate:
+    'https://www.optio.ai/api/v2/analytics/transactions/facts/find',
 };
 
 /*

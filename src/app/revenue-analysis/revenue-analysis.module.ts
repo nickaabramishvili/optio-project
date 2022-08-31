@@ -7,6 +7,7 @@ import { EveryDayFactsTableComponent } from './every-day-facts-table/every-day-f
 import { RevenueAnalysisComponent } from './revenue-analysis.component';
 import { RouterModule } from '@angular/router';
 import { routes } from './revenue-analysis.routing.module';
+import { MaterialModule } from '../assets/libraries/material/material.module';
 @NgModule({
   declarations: [
     FiltersComponent,
@@ -15,6 +16,6 @@ import { routes } from './revenue-analysis.routing.module';
     EveryDayFactsTableComponent,
     RevenueAnalysisComponent,
   ],
-  imports: [CommonModule, RouterModule.forChild(routes)],
+  imports: [CommonModule, RouterModule.forChild(routes), MaterialModule],
 })
 export class RevenueAnalysisModule {}
