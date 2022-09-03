@@ -4,3 +4,11 @@
   padding-left: 80px;
   justify-content: space-between;
 }
+.table-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  app-every-day-facts-table {
+    width: 100%;
+  }
+}
