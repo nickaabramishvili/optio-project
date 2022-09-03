@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { dateInputsHaveChanged } from '@angular/material/datepicker/datepicker-input-base';
 import { FactsService } from '../shared/services/facts.service';
 @Component({
   selector: 'app-revenue-analysis',
@@ -8,9 +9,29 @@ import { FactsService } from '../shared/services/facts.service';
 export class RevenueAnalysisComponent implements OnInit {
   constructor(private factsService: FactsService) {}
 
-  ngOnInit(): void {
-    this.factsService.getPosts().subscribe((data) => {
-      console.log(data);
-    });
-  }
+  // const chartCategoryData = []
+  // const chartDailiyDAta = []
+  ngOnInit(): void {}
+
+  // datechanged({startDate,endDAte}){
+
+  //     this.loadCategoryChartdata(startDate,endDAte);
+  //     this.loaddailyChartData(startDate,endDAte);
+
+  // }
+
+  // loadCategoryChartdata(startDate,endDate){
+  //   this.factsService.getPosts('category',startDAte,endDate).subscribe((data) => {
+  //     this.chartCategoryData  =data;
+  //     console.log(data);
+  //   });
+  // }
+
+  // loaddailyChartData(startDate,endDAte){
+
+  //   this.factsService.getPosts('daily',startDAte,endDate).subscribe((data) => {
+  //     this.chartCategoryData  =data;
+  //     console.log(data);
+  //   });
+  // }
 }

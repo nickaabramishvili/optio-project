@@ -1,4 +1,13 @@
 .filters-wrapper {
   width: 100%;
-  padding: 50px;
+  padding: 10px 20px 30px 20px;
+  text-align: center;
+  form {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+  }
+  p {
+    padding: 20px;
+  }
 }

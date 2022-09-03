@@ -8,6 +8,7 @@ import { RevenueAnalysisComponent } from './revenue-analysis.component';
 import { RouterModule } from '@angular/router';
 import { routes } from './revenue-analysis.routing.module';
 import { MaterialModule } from '../assets/libraries/material/material.module';
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     FiltersComponent,
@@ -16,6 +17,11 @@ import { MaterialModule } from '../assets/libraries/material/material.module';
     EveryDayFactsTableComponent,
     RevenueAnalysisComponent,
   ],
-  imports: [CommonModule, RouterModule.forChild(routes), MaterialModule],
+  imports: [
+    CommonModule,
+    RouterModule.forChild(routes),
+    MaterialModule,
+    ReactiveFormsModule,
+  ],
 })
 export class RevenueAnalysisModule {}

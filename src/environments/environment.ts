@@ -4,10 +4,9 @@
 
 export const environment = {
   production: false,
-  aggregatedFactsWithDimensionsAndFilters:
-    'https://www.optio.ai/api/v2/analytics/transactions/facts/aggregate',
-  factsWithDimensionsAndFiltersByDate:
-    'https://www.optio.ai/api/v2/analytics/transactions/facts/find',
+  apiBaseUrl: 'https://api.next.insight.optio.ai/api/v2',
+  facts: '/analytics/transactions/facts/aggregate',
+  factsByDate: '/analytics/transactions/facts/find',
 };
 
 /*
