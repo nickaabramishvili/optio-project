@@ -1,10 +1,13 @@
 <p>revenue-analysis Module works!</p>
-<app-filters></app-filters>
+<app-filters (dateChanged)="onDateChanged($event)"></app-filters>
 
 <!-- <app-filters (datechanged)="onDatechanged($event)"></app-filters> -->
 <div class="charts-wrapper">
-  <app-revenue-categories-chart> </app-revenue-categories-chart>
-  <app-revenue-intensity-chart></app-revenue-intensity-chart>
+  <app-revenue-categories-chart [data]="chartCategoryData">
+  </app-revenue-categories-chart>
+  <app-revenue-intensity-chart
+    [data]="chartIntensData"
+  ></app-revenue-intensity-chart>
 </div>
 <div class="table-wrapper">
   <app-every-day-facts-table></app-every-day-facts-table>

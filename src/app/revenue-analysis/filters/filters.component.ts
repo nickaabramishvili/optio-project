@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FactsService } from '../../shared/services/facts.service';
+import * as moment from 'moment';
+
 @Component({
   selector: 'app-filters',
   templateUrl: './filters.component.html',
@@ -8,32 +10,26 @@ import { FactsService } from '../../shared/services/facts.service';
 })
 export class FiltersComponent implements OnInit {
   dateFilterForm: FormGroup;
-  hide: boolean;
-
+  @Output() dateChanged: EventEmitter<{ startDate: string; endDate: string }> =
+    new EventEmitter();
   constructor(private factsService: FactsService) {
-    this.hide = true;
     this.dateFilterForm = new FormGroup({
       startDate: new FormControl('', [Validators.required]),
       endDate: new FormControl('', [Validators.required]),
     });
   }
   onSubmit() {
-    if (this.dateFilterForm.invalid) {
-      return;
-    }
-
-    console.log(this.dateFilterForm.status);
-    console.log('--------------------------');
-    console.log(
-      this.dateFilterForm.get('startDate')?.value +
-        ' , ' +
-        this.dateFilterForm.get('endDate')?.value
+    const startDate = moment(this.dateFilterForm.value.startDate).format(
+      'YYYY-MM-DD'
     );
-    this.factsService.getFacts().subscribe((data) => console.log(data));
-    // this.factsService.getFactsByDate().subscribe((data) => console.log(data));
-    console.log(typeof this.dateFilterForm.get('startDate')?.value);
+    const endDate = moment(this.dateFilterForm.value.endDate).format(
+      'YYYY-MM-DD'
+    );
 
-    this.factsService.startDate = this.dateFilterForm.get('endDate')?.value;
+    console.log(startDate);
+    console.log(endDate, ' BEFORE EMIT');
+
+    this.dateChanged.emit({ startDate, endDate });
   }
 
   ngOnInit(): void {}

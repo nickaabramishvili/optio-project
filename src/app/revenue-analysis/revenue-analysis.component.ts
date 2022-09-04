@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { dateInputsHaveChanged } from '@angular/material/datepicker/datepicker-input-base';
+import { map } from 'rxjs';
 import { FactsService } from '../shared/services/facts.service';
+
+export interface DateRange {
+  startDate: string;
+  endDate: string;
+}
 @Component({
   selector: 'app-revenue-analysis',
   templateUrl: './revenue-analysis.component.html',
@@ -9,29 +14,37 @@ import { FactsService } from '../shared/services/facts.service';
 export class RevenueAnalysisComponent implements OnInit {
   constructor(private factsService: FactsService) {}
 
-  // const chartCategoryData = []
-  // const chartDailiyDAta = []
+  chartCategoryData = [];
+  chartIntensData = [];
   ngOnInit(): void {}
 
-  // datechanged({startDate,endDAte}){
+  onDateChanged(dateRange: DateRange) {
+    this.loadCategoryChartdata(dateRange);
+    this.loadDailyChartData(dateRange);
+  }
 
-  //     this.loadCategoryChartdata(startDate,endDAte);
-  //     this.loaddailyChartData(startDate,endDAte);
+  loadCategoryChartdata(dateRange: DateRange) {
+    this.factsService
+      .getTransactions('category', dateRange)
+      .pipe(
+        map((response) => {
+          const data: { name: string; value: number }[] = [];
+          response.data.forEach((item: any) =>
+            data.push({ name: item.dimension, value: item.volume / 100 })
+          );
+          return data;
+        })
+      )
+      .subscribe((response: any) => {
+        this.chartCategoryData = response;
+      });
+  }
 
-  // }
-
-  // loadCategoryChartdata(startDate,endDate){
-  //   this.factsService.getPosts('category',startDAte,endDate).subscribe((data) => {
-  //     this.chartCategoryData  =data;
-  //     console.log(data);
-  //   })m;
-  // }
-
-  // loaddailyChartData(startDate,endDAte){
-
-  //   this.factsService.getPosts('daily',startDAte,endDate).subscribe((data) => {
-  //     this.chartCategoryData  =data;
-  //     console.log(data);
-  //   });
-  // }
+  loadDailyChartData(dateRange: DateRange) {
+    this.factsService
+      .getTransactions('date', dateRange)
+      .subscribe((response: any) => {
+        this.chartIntensData = response.data;
+      });
+  }
 }

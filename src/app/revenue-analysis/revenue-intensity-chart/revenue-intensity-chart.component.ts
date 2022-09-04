@@ -1,70 +1,81 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  ViewChild,
+  ElementRef,
+  AfterViewInit,
+} from '@angular/core';
 import * as echarts from 'echarts';
+type EChartsOption = echarts.EChartsOption;
+
 @Component({
   selector: 'app-revenue-intensity-chart',
   templateUrl: './revenue-intensity-chart.component.html',
   styleUrls: ['./revenue-intensity-chart.component.scss'],
 })
-export class RevenueIntensityChartComponent implements OnInit {
-  constructor() {}
+export class RevenueIntensityChartComponent implements AfterViewInit {
+  @ViewChild('intensityChart') intensityChart: ElementRef | any;
 
-  ngOnInit(): void {}
-  ngAfterViewInit() {
-    type EChartsOption = echarts.EChartsOption;
+  days = [
+    'Sunday',
+    'Saturday',
+    'Friday',
+    'Thursday',
+    'Wednesday',
+    'Tuesday',
+    'Monday',
+  ];
 
-    var chartDom = document.getElementById('intensityChart')!;
-    var myChart = echarts.init(chartDom);
-    var option: EChartsOption;
+  option: any = {
+    title: {
+      top: 30,
+      left: 'center',
+      text: 'Daily Step Count',
+    },
 
-    function getVirtulData(year: string) {
-      year = year || '2017';
-      var date = +echarts.number.parseDate(year + '-01-01');
-      var end = +echarts.number.parseDate(+year + 1 + '-01-01');
-      var dayTime = 3600 * 24 * 1000;
-      var data: [string, number][] = [];
-      for (var time = date; time < end; time += dayTime) {
-        data.push([
-          echarts.format.formatTime('yyyy-MM-dd', time),
-          Math.floor(Math.random() * 10000),
-        ]);
-      }
-      return data;
+    visualMap: {
+      min: 0,
+      max: 100000,
+      type: 'piecewise',
+      orient: 'horizontal',
+      left: 'center',
+      top: 65,
+    },
+    calendar: {
+      top: 120,
+      left: 30,
+      right: 30,
+      cellSize: ['auto', 13],
+      range: '2018',
+      itemStyle: {
+        borderWidth: 0.5,
+      },
+      yearLabel: { show: false },
+    },
+    series: {
+      type: 'heatmap',
+      coordinateSystem: 'calendar',
+      data: [],
+    },
+  };
+  myChart: any;
+
+  @Input() set data(items: any[]) {
+    if (!this.myChart) {
+      return;
     }
 
-    option = {
-      title: {
-        top: 30,
-        left: 'center',
-        text: 'Daily Step Count',
-      },
-      tooltip: {},
-      visualMap: {
-        min: 0,
-        max: 10000,
-        type: 'piecewise',
-        orient: 'horizontal',
-        left: 'center',
-        top: 65,
-      },
-      calendar: {
-        top: 120,
-        left: 30,
-        right: 30,
-        cellSize: ['auto', 13],
-        range: '2016',
-        itemStyle: {
-          borderWidth: 0.5,
-        },
-        yearLabel: { show: false },
-      },
-      series: {
-        type: 'heatmap',
-        coordinateSystem: 'calendar',
-        data: getVirtulData('2016'),
-        // es data aris mtavari da aq mchirdeba  [string, number][] = []; es iq amas aketebs da ayuris
-      },
-    };
+    this.option.series.data = items.map((item) => [
+      echarts.format.formatTime('yyyy-MM-dd', item.dimension),
+      item.volume / 100,
+    ]);
 
-    option && myChart.setOption(option);
+    console.log(this.option);
+
+    this.myChart.setOption(this.option);
+  }
+
+  ngAfterViewInit() {
+    this.myChart = echarts.init(this.intensityChart.nativeElement!);
   }
 }

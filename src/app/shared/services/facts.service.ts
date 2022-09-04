@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { DateTransform } from '../helpers/date-transform';
+import { DateRange } from '../../revenue-analysis/revenue-analysis.component';
 @Injectable({
   providedIn: 'root',
 })
@@ -23,18 +23,18 @@ export class FactsService {
   //     }
   //   );
   // }
-  getFacts(): Observable<any> {
+  getTransactions(dimension: string, dateRange: DateRange): Observable<any> {
     return this.httpClient.post<any>(
-      `${environment.apiBaseUrl}${environment.facts}`,
+      `${environment.apiBaseUrl}/analytics/transactions/facts/aggregate`,
       {
-        dimension: 'category',
+        dimension,
         types: ['income'],
-        gteDate: '2018-01-01',
-        lteDate: '2018-01-31',
+        gteDate: dateRange.startDate,
+        lteDate: dateRange.endDate,
       }
     );
-    // .pipe(map((response) => ({})));
   }
+
   getFactsByDate(): Observable<any> {
     return this.httpClient.post<any>(
       `${environment.apiBaseUrl}${environment.factsByDate}`,
