@@ -2,10 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { DateTransform } from '../helpers/date-transform';
 @Injectable({
   providedIn: 'root',
 })
 export class FactsService {
+  startDate: string = '';
+  endDate: string = '';
   constructor(private httpClient: HttpClient) {}
   // getPosts(dimennsion,.startDate,endDate): Observable<any> {
   //   return this.httpClient.post<any>(
@@ -30,6 +33,7 @@ export class FactsService {
         lteDate: '2018-01-31',
       }
     );
+    // .pipe(map((response) => ({})));
   }
   getFactsByDate(): Observable<any> {
     return this.httpClient.post<any>(

@@ -24,7 +24,7 @@ export class RevenueAnalysisComponent implements OnInit {
   //   this.factsService.getPosts('category',startDAte,endDate).subscribe((data) => {
   //     this.chartCategoryData  =data;
   //     console.log(data);
-  //   });
+  //   })m;
   // }
 
   // loaddailyChartData(startDate,endDAte){

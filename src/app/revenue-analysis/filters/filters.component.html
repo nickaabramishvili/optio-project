@@ -2,34 +2,26 @@
   <p>Please Choose Beginning and End Date To Filter Data</p>
   <form (ngSubmit)="onSubmit()" [formGroup]="dateFilterForm">
     <mat-form-field appearance="fill">
-      <mat-label>Choose Begginning Date</mat-label>
-      <input
-        matInput
-        [matDatepicker]="beginningpicker"
-        formControlName="startDate"
-      />
-      <mat-hint>MM/DD/YYYY</mat-hint>
-      <mat-datepicker-toggle
-        matSuffix
-        [for]="beginningpicker"
-      ></mat-datepicker-toggle>
-      <mat-datepicker #beginningpicker></mat-datepicker>
+      <mat-label>Enter a date range</mat-label>
+      <mat-date-range-input [rangePicker]="picker">
+        <input
+          matStartDate
+          placeholder="Start date"
+          formControlName="startDate"
+        />
+        <input matEndDate placeholder="End date" formControlName="endDate" />
+      </mat-date-range-input>
+      <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
     </mat-form-field>
-
-    <mat-form-field appearance="fill">
-      <mat-label>Choose Ending Date</mat-label>
-      <input
-        matInput
-        [matDatepicker]="endingpicker"
-        formControlName="endDate"
-      />
-      <mat-hint>MM/DD/YYYY</mat-hint>
-      <mat-datepicker-toggle
-        matSuffix
-        [for]="endingpicker"
-      ></mat-datepicker-toggle>
-      <mat-datepicker #endingpicker></mat-datepicker>
-    </mat-form-field>
-    <button mat-raised-button color="primary" class="mx-4">Primary</button>
+    <button
+      mat-raised-button
+      color="primary"
+      class="mx-4"
+      [disabled]="dateFilterForm.invalid"
+    >
+      Primary
+    </button>
   </form>
 </div>

@@ -9,6 +9,7 @@ import { FactsService } from '../../shared/services/facts.service';
 export class FiltersComponent implements OnInit {
   dateFilterForm: FormGroup;
   hide: boolean;
+
   constructor(private factsService: FactsService) {
     this.hide = true;
     this.dateFilterForm = new FormGroup({
@@ -17,6 +18,10 @@ export class FiltersComponent implements OnInit {
     });
   }
   onSubmit() {
+    if (this.dateFilterForm.invalid) {
+      return;
+    }
+
     console.log(this.dateFilterForm.status);
     console.log('--------------------------');
     console.log(
@@ -26,6 +31,10 @@ export class FiltersComponent implements OnInit {
     );
     this.factsService.getFacts().subscribe((data) => console.log(data));
     // this.factsService.getFactsByDate().subscribe((data) => console.log(data));
+    console.log(typeof this.dateFilterForm.get('startDate')?.value);
+
+    this.factsService.startDate = this.dateFilterForm.get('endDate')?.value;
   }
+
   ngOnInit(): void {}
 }
