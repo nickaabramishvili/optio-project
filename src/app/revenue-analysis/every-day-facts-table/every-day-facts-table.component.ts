@@ -4,31 +4,44 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
+  dimension: string;
+  date: string;
+  quantity: number;
+  volume: number;
+  average: number;
+  differenceQuantity: number;
+  differenceVolume: number;
 }
-
+// prettier-ignore
 const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-  { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-  { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-  { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-  { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-  { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-  { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
+   
+  { dimension: '1', date: '1', quantity: 1.0079, volume: 1, average: 1 , differenceQuantity: 1.0079, differenceVolume: 1 },
+  { dimension: '2', date: '1',  quantity: 4.0026, volume: 1 , average: 3 , differenceQuantity: 1.0079, differenceVolume: 6 },
+  { dimension: '3', date: '54124',  quantity: 6.941, volume: 1 , average: 3211 , differenceQuantity: 1.0079, differenceVolume: 1 },
+  { dimension: '4', date: '1',  quantity: 9.0122, volume: 1 , average: 4121 , differenceQuantity: 1.0079, differenceVolume: 1 },
+  { dimension: '41245', date: '1',  quantity: 10.811, volume: 5, average: 1  , differenceQuantity: 1.0079, differenceVolume: 7 },
+  { dimension: '6', date: '1', quantity: 12.0107, volume: 1, average: 1 , differenceQuantity: 6.0079, differenceVolume: 1 },
+  { dimension: '7', date: '1', quantity: 14.0067, volume: 1, average: 1 , differenceQuantity: 1.0079, differenceVolume: 1 },
+  { dimension: '418', date: '412w1',  quantity: 15.9994, volume: 11, average: 1 , differenceQuantity: 1.0079, differenceVolume: 1 },
+  { dimension: '9', date: '1', quantity: 18.9984, volume: 1, average: 1 , differenceQuantity: 1.0079, differenceVolume: 1 },
+  { dimension: '10', date:'1',   quantity: 20.1797, volume: 1 , average: 1 , differenceQuantity: 1.0079, differenceVolume: 1 },
 ];
+// prettier-ignore
 @Component({
   selector: 'app-every-day-facts-table',
   templateUrl: './every-day-facts-table.component.html',
   styleUrls: ['./every-day-facts-table.component.scss'],
 })
 export class EveryDayFactsTableComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  displayedColumns: string[] = [
+    'dimension',
+    'date',
+    'quantity',
+    'volume',
+    'average',
+    'differenceQuantity',
+    'differenceVolume',
+  ];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
 
   constructor(private _liveAnnouncer: LiveAnnouncer) {}
