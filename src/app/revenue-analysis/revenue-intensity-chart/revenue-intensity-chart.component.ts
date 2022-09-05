@@ -16,15 +16,7 @@ type EChartsOption = echarts.EChartsOption;
 export class RevenueIntensityChartComponent implements AfterViewInit {
   @ViewChild('intensityChart') intensityChart: ElementRef | any;
 
-  days = [
-    'Sunday',
-    'Saturday',
-    'Friday',
-    'Thursday',
-    'Wednesday',
-    'Tuesday',
-    'Monday',
-  ];
+  days = ['Saturday', 'Friday', 'Thursday', 'Wednesday', 'Tuesday', 'Monday'];
 
   option: any = {
     title: {
@@ -32,7 +24,7 @@ export class RevenueIntensityChartComponent implements AfterViewInit {
       left: 'center',
       text: 'Daily Step Count',
     },
-
+    tooltip: {},
     visualMap: {
       min: 0,
       max: 100000,
@@ -70,7 +62,7 @@ export class RevenueIntensityChartComponent implements AfterViewInit {
       item.volume / 100,
     ]);
 
-    console.log(this.option);
+    // console.log(this.option);
 
     this.myChart.setOption(this.option);
   }

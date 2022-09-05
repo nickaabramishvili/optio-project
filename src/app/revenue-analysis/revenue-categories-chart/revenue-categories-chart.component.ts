@@ -15,14 +15,6 @@ import * as echarts from 'echarts';
 export class RevenueCategoriesChartComponent implements AfterViewInit {
   @ViewChild('main') main: ElementRef | any;
 
-  @Input() set data(items: { name: string; value: number }[]) {
-    if (!this.myChart) {
-      return;
-    }
-
-    this.option.series[0].data = items;
-    this.myChart.setOption(this.option);
-  }
   myChart: any;
   option: echarts.EChartsOption | any = {
     legend: {
@@ -51,7 +43,14 @@ export class RevenueCategoriesChartComponent implements AfterViewInit {
       },
     ],
   };
+  @Input() set data(items: { name: string; value: number }[]) {
+    if (!this.myChart) {
+      return;
+    }
 
+    this.option.series[0].data = items;
+    this.myChart.setOption(this.option);
+  }
   ngAfterViewInit(): void {
     this.myChart = echarts.init(this.main.nativeElement!);
   }

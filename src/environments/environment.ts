@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   apiBaseUrl: 'https://api.next.insight.optio.ai/api/v2',
   facts: '/analytics/transactions/facts/aggregate',
-  factsByDate: '/analytics/transactions/facts/find',
+  factsByDay: '/analytics/transactions/facts/find',
 };
 
 /*

@@ -10,22 +10,11 @@ export class FactsService {
   startDate: string = '';
   endDate: string = '';
   constructor(private httpClient: HttpClient) {}
-  // getPosts(dimennsion,.startDate,endDate): Observable<any> {
-  //   return this.httpClient.post<any>(
-  //     `${environment.apiBaseUrl}/analytics/transactions/facts/aggregate`,
-  //     {
-  //       "dimension": dimennsion,
-  //       "types": [
-  //         "income"
-  //       ],
-  //       "gteDate":startDAte,
-  //       "lteDate":endDAte
-  //     }
-  //   );
-  // }
+
+  // for charts
   getTransactions(dimension: string, dateRange: DateRange): Observable<any> {
     return this.httpClient.post<any>(
-      `${environment.apiBaseUrl}/analytics/transactions/facts/aggregate`,
+      `${environment.apiBaseUrl}${environment.facts}`,
       {
         dimension,
         types: ['income'],
@@ -35,9 +24,10 @@ export class FactsService {
     );
   }
 
-  getFactsByDate(): Observable<any> {
+  // for table
+  getFactsByDay(): Observable<any> {
     return this.httpClient.post<any>(
-      `${environment.apiBaseUrl}${environment.factsByDate}`,
+      `${environment.apiBaseUrl}${environment.factsByDay}`,
       {
         dimension: 'category',
         types: ['income'],
@@ -51,5 +41,3 @@ export class FactsService {
     );
   }
 }
-// moment js formatirebistvis angularistvis ro davaformato da mse gadavce and me davwero formatireba magisi
-// data unda gadavawodo mshobels da mshobildan shvils chavawodo

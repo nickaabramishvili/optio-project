@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { map } from 'rxjs';
 import { FactsService } from '../shared/services/facts.service';
 
@@ -37,6 +37,7 @@ export class RevenueAnalysisComponent implements OnInit {
       )
       .subscribe((response: any) => {
         this.chartCategoryData = response;
+        console.log(this.chartCategoryData);
       });
   }
 
