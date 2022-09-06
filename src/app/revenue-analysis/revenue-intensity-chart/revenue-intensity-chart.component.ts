@@ -6,6 +6,7 @@ import {
   AfterViewInit,
 } from '@angular/core';
 import * as echarts from 'echarts';
+import * as moment from 'moment';
 type EChartsOption = echarts.EChartsOption;
 
 @Component({
@@ -16,14 +17,54 @@ type EChartsOption = echarts.EChartsOption;
 export class RevenueIntensityChartComponent implements AfterViewInit {
   @ViewChild('intensityChart') intensityChart: ElementRef | any;
 
-  days = ['Saturday', 'Friday', 'Thursday', 'Wednesday', 'Tuesday', 'Monday'];
+  @Input() set data(items: any[]) {
+    if (!this.myChart) {
+      return;
+    }
+    this.option.calendar = [];
+    this.option.series = [];
+    const dataSeries: { [key: string]: any[] } = {};
+    items.forEach((item) => {
+      const year = moment(item.dimension).year().toString();
+      if (!dataSeries[year]) {
+        dataSeries[year] = [
+          [
+            echarts.format.formatTime('yyyy-MM-dd', item.dimension),
+            item.volume / 100,
+          ],
+        ];
+      } else {
+        dataSeries[year].push([
+          echarts.format.formatTime('yyyy-MM-dd', item.dimension),
+          item.volume / 100,
+        ]);
+      }
+    });
+
+    let top = 120;
+    let index = 0;
+    for (const [key, value] of Object.entries(dataSeries)) {
+      this.option.calendar.push({
+        top,
+        range: key.toString(),
+        orient: 'horizontal',
+        cellSize: ['auto', 12],
+      });
+
+      this.option.series.push({
+        type: 'heatmap',
+        coordinateSystem: 'calendar',
+        data: value,
+        calendarIndex: index,
+      });
+      top += 120;
+      index += 1;
+    }
+
+    this.myChart.setOption(this.option, true);
+  }
 
   option: any = {
-    title: {
-      top: 30,
-      left: 'center',
-      text: 'Daily Step Count',
-    },
     tooltip: {},
     visualMap: {
       min: 0,
@@ -31,41 +72,12 @@ export class RevenueIntensityChartComponent implements AfterViewInit {
       type: 'piecewise',
       orient: 'horizontal',
       left: 'center',
-      top: 65,
+      top: '65',
     },
-    calendar: {
-      top: 120,
-      left: 30,
-      right: 30,
-      cellSize: ['auto', 13],
-      range: '2018',
-      itemStyle: {
-        borderWidth: 0.5,
-      },
-      yearLabel: { show: false },
-    },
-    series: {
-      type: 'heatmap',
-      coordinateSystem: 'calendar',
-      data: [],
-    },
+    calendar: [],
+    series: [],
   };
   myChart: any;
-
-  @Input() set data(items: any[]) {
-    if (!this.myChart) {
-      return;
-    }
-
-    this.option.series.data = items.map((item) => [
-      echarts.format.formatTime('yyyy-MM-dd', item.dimension),
-      item.volume / 100,
-    ]);
-
-    // console.log(this.option);
-
-    this.myChart.setOption(this.option);
-  }
 
   ngAfterViewInit() {
     this.myChart = echarts.init(this.intensityChart.nativeElement!);

@@ -1,1 +1,15 @@
-<div #main id="main">Some text</div>
+<div style="position: relative">
+  <div #main id="main">Some text</div>
+  <div
+    *ngIf="loading"
+    style="
+      position: absolute;
+      top: 10px;
+      width: 100px;
+      height: 100px;
+      background: red;
+    "
+  >
+    "LOADING DATA"
+  </div>
+</div>

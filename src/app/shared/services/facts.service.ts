@@ -3,6 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { DateRange } from '../../revenue-analysis/revenue-analysis.component';
+
+export interface FactsByDayPagination {
+  pageIndex: number;
+  sortBy: string;
+  sortDirection: string;
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -25,17 +31,20 @@ export class FactsService {
   }
 
   // for table
-  getFactsByDay(dimension: string, dateRange: DateRange): Observable<any> {
+  getFactsByDay(
+    dateRange: DateRange,
+    { pageIndex, sortBy, sortDirection }: FactsByDayPagination
+  ) {
     return this.httpClient.post<any>(
       `${environment.apiBaseUrl}${environment.factsByDay}`,
       {
-        dimension,
+        dimension: 'category',
         types: ['income'],
         gteDate: dateRange.startDate,
         lteDate: dateRange.endDate,
-        sortBy: 'date',
-        sortDirection: 'asc',
-        pageIndex: 0,
+        sortBy,
+        sortDirection,
+        pageIndex,
         pageSize: 50,
       }
     );

@@ -3,29 +3,31 @@ import { map } from 'rxjs';
 import { FactsService } from '../shared/services/facts.service';
 
 export interface DateRange {
-  startDate: string;
-  endDate: string;
+  startDate: string | null;
+  endDate: string | null;
 }
 @Component({
   selector: 'app-revenue-analysis',
   templateUrl: './revenue-analysis.component.html',
   styleUrls: ['./revenue-analysis.component.scss'],
 })
-export class RevenueAnalysisComponent implements OnInit, AfterViewInit {
+export class RevenueAnalysisComponent {
   constructor(private factsService: FactsService) {}
-
+  dateRange: DateRange = { startDate: null, endDate: null };
   chartCategoryData = [];
   chartIntensData = [];
-  tableFactsData = [];
-  ngOnInit(): void {}
+  chartCategoryDataisLoading: boolean = false;
+  chartIntensDataisLoading: boolean = false;
 
   onDateChanged(dateRange: DateRange) {
+    this.dateRange = dateRange;
     this.loadCategoryChartdata(dateRange);
     this.loadDailyChartData(dateRange);
-    this.loadDailyTableData(dateRange);
   }
 
   loadCategoryChartdata(dateRange: DateRange) {
+    this.chartCategoryDataisLoading = true;
+    this.chartCategoryData = [];
     this.factsService
       .getTransactions('category', dateRange)
       .pipe(
@@ -38,8 +40,8 @@ export class RevenueAnalysisComponent implements OnInit, AfterViewInit {
         })
       )
       .subscribe((response: any) => {
+        this.chartCategoryDataisLoading = false;
         this.chartCategoryData = response;
-        console.log(this.chartCategoryData);
       });
   }
 
@@ -48,44 +50,7 @@ export class RevenueAnalysisComponent implements OnInit, AfterViewInit {
       .getTransactions('date', dateRange)
       .subscribe((response: any) => {
         this.chartIntensData = response.data;
+        this.chartIntensDataisLoading = false;
       });
-  }
-
-  loadDailyTableData(dateRange: DateRange) {
-    this.factsService
-      .getFactsByDay('category', dateRange)
-      .pipe(
-        map((response) => {
-          const data: {
-            dimension: string;
-            date: string;
-            quantity: number;
-            volume: number;
-            average: number;
-            differenceQuantity: number;
-            differenceVolume: number;
-          }[] = [];
-          response.data.entities.forEach((item: any) =>
-            data.push({
-              dimension: item.dimension,
-              date: item.date,
-              quantity: item.quantity,
-              volume: item.volume,
-              average: item.average,
-              differenceQuantity: item.differenceQuantity,
-              differenceVolume: item.differenceVolume,
-            })
-          );
-          return data;
-        })
-      )
-      .subscribe((response: any) => {
-        this.tableFactsData = response;
-      });
-  }
-  ngAfterViewInit() {
-    console.log(this.tableFactsData);
-    console.log(this.chartCategoryData);
-    console.log(this.chartIntensData);
   }
 }

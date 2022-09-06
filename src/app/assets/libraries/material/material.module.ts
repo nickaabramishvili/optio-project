@@ -7,6 +7,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 @NgModule({
   imports: [
     MatTableModule,
@@ -17,6 +19,7 @@ import { MatSortModule } from '@angular/material/sort';
     MatFormFieldModule,
     MatPaginatorModule,
     MatSortModule,
+    MatProgressSpinnerModule,
   ],
   exports: [
     MatTableModule,
@@ -27,6 +30,7 @@ import { MatSortModule } from '@angular/material/sort';
     MatFormFieldModule,
     MatSortModule,
     MatPaginatorModule,
+    MatProgressSpinnerModule,
   ],
   providers: [MatDatepickerModule],
 })

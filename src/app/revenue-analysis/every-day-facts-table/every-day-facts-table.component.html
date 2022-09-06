@@ -1,10 +1,11 @@
-<p>every-day-facts-table works!</p>
 <div class="mat-elevation-z8">
   <table
     mat-table
-    [dataSource]="dataSource"
+    [dataSource]="data"
     matSort
-    (matSortChange)="announceSortChange($event)"
+    matSortActive="date"
+    matSortDisableClear
+    matSortDirection="asc"
   >
     <ng-container matColumnDef="dimension">
       <th
@@ -97,9 +98,12 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
   <mat-paginator
-    [pageSizeOptions]="[5, 10, 20]"
-    showFirstLastButtons
-    aria-label="Select page of periodic elements"
+    [length]="resultsLength"
+    [pageSize]="50"
+    aria-label="Select page elements"
   >
   </mat-paginator>
+  <ng-container *ngIf="loading$ | async">
+    <mat-spinner></mat-spinner>
+  </ng-container>
 </div>

@@ -3,14 +3,20 @@
 
 <!-- <app-filters (datechanged)="onDatechanged($event)"></app-filters> -->
 <div class="charts-wrapper">
-  <app-revenue-categories-chart [data]="chartCategoryData">
+  <app-revenue-categories-chart
+    [data]="chartCategoryData"
+    [loading]="chartCategoryDataisLoading"
+  >
   </app-revenue-categories-chart>
-  <app-revenue-intensity-chart
-    [data]="chartIntensData"
-  ></app-revenue-intensity-chart>
 </div>
+
+<app-revenue-intensity-chart
+  [data]="chartIntensData"
+  *ngIf="!chartIntensDataisLoading"
+></app-revenue-intensity-chart>
+
 <div class="table-wrapper">
   <app-every-day-facts-table
-    [data]="tableFactsData"
+    [dateRange]="dateRange"
   ></app-every-day-facts-table>
 </div>
