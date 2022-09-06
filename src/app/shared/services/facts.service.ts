@@ -25,14 +25,14 @@ export class FactsService {
   }
 
   // for table
-  getFactsByDay(): Observable<any> {
+  getFactsByDay(dimension: string, dateRange: DateRange): Observable<any> {
     return this.httpClient.post<any>(
       `${environment.apiBaseUrl}${environment.factsByDay}`,
       {
-        dimension: 'category',
+        dimension,
         types: ['income'],
-        gteDate: '2018-01-01',
-        lteDate: '2018-01-31',
+        gteDate: dateRange.startDate,
+        lteDate: dateRange.endDate,
         sortBy: 'date',
         sortDirection: 'asc',
         pageIndex: 0,

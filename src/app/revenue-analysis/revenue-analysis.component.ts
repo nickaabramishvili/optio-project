@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { map } from 'rxjs';
 import { FactsService } from '../shared/services/facts.service';
 
@@ -11,16 +11,18 @@ export interface DateRange {
   templateUrl: './revenue-analysis.component.html',
   styleUrls: ['./revenue-analysis.component.scss'],
 })
-export class RevenueAnalysisComponent implements OnInit {
+export class RevenueAnalysisComponent implements OnInit, AfterViewInit {
   constructor(private factsService: FactsService) {}
 
   chartCategoryData = [];
   chartIntensData = [];
+  tableFactsData = [];
   ngOnInit(): void {}
 
   onDateChanged(dateRange: DateRange) {
     this.loadCategoryChartdata(dateRange);
     this.loadDailyChartData(dateRange);
+    this.loadDailyTableData(dateRange);
   }
 
   loadCategoryChartdata(dateRange: DateRange) {
@@ -47,5 +49,43 @@ export class RevenueAnalysisComponent implements OnInit {
       .subscribe((response: any) => {
         this.chartIntensData = response.data;
       });
+  }
+
+  loadDailyTableData(dateRange: DateRange) {
+    this.factsService
+      .getFactsByDay('category', dateRange)
+      .pipe(
+        map((response) => {
+          const data: {
+            dimension: string;
+            date: string;
+            quantity: number;
+            volume: number;
+            average: number;
+            differenceQuantity: number;
+            differenceVolume: number;
+          }[] = [];
+          response.data.entities.forEach((item: any) =>
+            data.push({
+              dimension: item.dimension,
+              date: item.date,
+              quantity: item.quantity,
+              volume: item.volume,
+              average: item.average,
+              differenceQuantity: item.differenceQuantity,
+              differenceVolume: item.differenceVolume,
+            })
+          );
+          return data;
+        })
+      )
+      .subscribe((response: any) => {
+        this.tableFactsData = response;
+      });
+  }
+  ngAfterViewInit() {
+    console.log(this.tableFactsData);
+    console.log(this.chartCategoryData);
+    console.log(this.chartIntensData);
   }
 }
