@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import * as echarts from 'echarts';
 import * as moment from 'moment';
+import { TransactionItem } from 'src/app/shared/services/facts.service';
 type EChartsOption = echarts.EChartsOption;
 
 @Component({
@@ -15,12 +16,13 @@ type EChartsOption = echarts.EChartsOption;
   styleUrls: ['./revenue-intensity-chart.component.scss'],
 })
 export class RevenueIntensityChartComponent implements AfterViewInit {
-  @ViewChild('intensityChart') intensityChart: ElementRef | any;
+  @ViewChild('intensityChart') intensityChart!: ElementRef;
   @Input() loading = false;
-  @Input() set data(items: any[]) {
+  @Input() set data(items: TransactionItem[]) {
     if (!this.myChart) {
       return;
     }
+
     this.option.calendar = [];
     this.option.series = [];
     const dataSeries: { [key: string]: any[] } = {};

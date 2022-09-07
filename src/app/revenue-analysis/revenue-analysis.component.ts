@@ -1,11 +1,11 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { map } from 'rxjs';
-import { FactsService } from '../shared/services/facts.service';
-
-export interface DateRange {
-  startDate: string | null;
-  endDate: string | null;
-}
+import {
+  FactsService,
+  TransactionItem,
+} from '../shared/services/facts.service';
+import { DateRange } from '../shared/models/date-range.model';
+import { CategoriesChartData } from '../shared/models/categories-chart-data.model';
 @Component({
   selector: 'app-revenue-analysis',
   templateUrl: './revenue-analysis.component.html',
@@ -14,8 +14,8 @@ export interface DateRange {
 export class RevenueAnalysisComponent {
   constructor(private factsService: FactsService) {}
   dateRange: DateRange = { startDate: null, endDate: null };
-  chartCategoryData = [];
-  chartIntensData = [];
+  chartCategoryData: CategoriesChartData[] = [];
+  chartIntensData: TransactionItem[] = [];
   chartCategoryDataisLoading: boolean = false;
   chartIntensityDataisLoading: boolean = false;
 
@@ -33,7 +33,7 @@ export class RevenueAnalysisComponent {
       .pipe(
         map((response) => {
           const data: { name: string; value: number }[] = [];
-          response.data.forEach((item: any) =>
+          response.data.forEach((item) =>
             data.push({ name: item.dimension, value: item.volume / 100 })
           );
           return data;

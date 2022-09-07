@@ -2,12 +2,32 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { DateRange } from '../../revenue-analysis/revenue-analysis.component';
+import { DateRange } from '../../shared/models/date-range.model';
+import { PeriodicElement } from '../models/table-data.model';
 
 export interface FactsByDayPagination {
   pageIndex: number;
   sortBy: string;
   sortDirection: string;
+}
+
+export interface TransactionItem {
+  dimension: string;
+  dimensionId: number;
+  type: number;
+  volume: number;
+  quantity: number;
+  average: number;
+}
+export interface TransactionsResponse {
+  data: TransactionItem[];
+}
+
+export interface FactsByDayResponse {
+  data: {
+    total: number;
+    entities: PeriodicElement[];
+  };
 }
 @Injectable({
   providedIn: 'root',
@@ -18,8 +38,11 @@ export class FactsService {
   constructor(private httpClient: HttpClient) {}
 
   // for charts
-  getTransactions(dimension: string, dateRange: DateRange): Observable<any> {
-    return this.httpClient.post<any>(
+  getTransactions(
+    dimension: string,
+    dateRange: DateRange
+  ): Observable<TransactionsResponse> {
+    return this.httpClient.post<TransactionsResponse>(
       `${environment.apiBaseUrl}${environment.facts}`,
       {
         dimension,
@@ -34,8 +57,8 @@ export class FactsService {
   getFactsByDay(
     dateRange: DateRange,
     { pageIndex, sortBy, sortDirection }: FactsByDayPagination
-  ) {
-    return this.httpClient.post<any>(
+  ): Observable<FactsByDayResponse> {
+    return this.httpClient.post<FactsByDayResponse>(
       `${environment.apiBaseUrl}${environment.factsByDay}`,
       {
         dimension: 'category',

@@ -6,6 +6,7 @@ import {
   ViewChild,
   Input,
 } from '@angular/core';
+import { CategoriesChartData } from '../../shared/models/categories-chart-data.model';
 import * as echarts from 'echarts';
 @Component({
   selector: 'app-revenue-categories-chart',
@@ -13,10 +14,10 @@ import * as echarts from 'echarts';
   styleUrls: ['./revenue-categories-chart.component.scss'],
 })
 export class RevenueCategoriesChartComponent implements AfterViewInit {
-  @ViewChild('main') main: ElementRef | any;
+  @ViewChild('main') main!: ElementRef;
 
   @Input() loading = false;
-  @Input() set data(items: { name: string; value: number }[]) {
+  @Input() set data(items: CategoriesChartData[]) {
     if (!this.myChart) {
       return;
     }

@@ -26,8 +26,6 @@ export class FiltersComponent implements OnInit {
       'YYYY-MM-DD'
     );
 
-    console.log(startDate, '-', endDate, ' BEFORE EMIT');
-
     this.dateChanged.emit({ startDate, endDate });
   }
 
