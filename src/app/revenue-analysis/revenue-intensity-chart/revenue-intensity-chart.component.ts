@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import * as echarts from 'echarts';
 import * as moment from 'moment';
-import { TransactionItem } from 'src/app/shared/services/facts.service';
+import { TransactionItem } from '../../shared/models/transaction-item.model';
 type EChartsOption = echarts.EChartsOption;
 
 @Component({

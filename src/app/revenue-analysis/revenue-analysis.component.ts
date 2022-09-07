@@ -1,11 +1,9 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { map } from 'rxjs';
-import {
-  FactsService,
-  TransactionItem,
-} from '../shared/services/facts.service';
+import { FactsService } from '../shared/services/facts.service';
 import { DateRange } from '../shared/models/date-range.model';
 import { CategoriesChartData } from '../shared/models/categories-chart-data.model';
+import { TransactionItem } from '../shared/models/transaction-item.model';
 @Component({
   selector: 'app-revenue-analysis',
   templateUrl: './revenue-analysis.component.html',

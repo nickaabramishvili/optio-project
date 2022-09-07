@@ -3,32 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { DateRange } from '../../shared/models/date-range.model';
-import { PeriodicElement } from '../models/table-data.model';
+import { FactsByDayPagination } from '../../shared/models/facts-by-day-pagination.model';
+import { TransactionsResponse } from '../models/transactions-response.model';
+import { FactsByDayResponse } from '../models/facts-by-day-response.model';
 
-export interface FactsByDayPagination {
-  pageIndex: number;
-  sortBy: string;
-  sortDirection: string;
-}
-
-export interface TransactionItem {
-  dimension: string;
-  dimensionId: number;
-  type: number;
-  volume: number;
-  quantity: number;
-  average: number;
-}
-export interface TransactionsResponse {
-  data: TransactionItem[];
-}
-
-export interface FactsByDayResponse {
-  data: {
-    total: number;
-    entities: PeriodicElement[];
-  };
-}
 @Injectable({
   providedIn: 'root',
 })
