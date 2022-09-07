@@ -17,12 +17,12 @@ export class RevenueAnalysisComponent {
   chartCategoryData = [];
   chartIntensData = [];
   chartCategoryDataisLoading: boolean = false;
-  chartIntensDataisLoading: boolean = false;
+  chartIntensityDataisLoading: boolean = false;
 
   onDateChanged(dateRange: DateRange) {
     this.dateRange = dateRange;
     this.loadCategoryChartdata(dateRange);
-    this.loadDailyChartData(dateRange);
+    this.loadIntensityChartData(dateRange);
   }
 
   loadCategoryChartdata(dateRange: DateRange) {
@@ -45,12 +45,13 @@ export class RevenueAnalysisComponent {
       });
   }
 
-  loadDailyChartData(dateRange: DateRange) {
+  loadIntensityChartData(dateRange: DateRange) {
+    this.chartIntensityDataisLoading = true;
     this.factsService
       .getTransactions('date', dateRange)
       .subscribe((response: any) => {
+        this.chartIntensityDataisLoading = false;
         this.chartIntensData = response.data;
-        this.chartIntensDataisLoading = false;
       });
   }
 }

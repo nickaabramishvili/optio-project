@@ -1,8 +1,14 @@
 .mat-elevation-z8 {
   margin: 40px;
+  .spinner {
+    margin: 20px auto;
+  }
 }
 table {
   width: 100%;
+  th {
+    vertical-align: middle;
+  }
 }
 
 th.mat-sort-header-sorted {

@@ -16,7 +16,7 @@ type EChartsOption = echarts.EChartsOption;
 })
 export class RevenueIntensityChartComponent implements AfterViewInit {
   @ViewChild('intensityChart') intensityChart: ElementRef | any;
-
+  @Input() loading = false;
   @Input() set data(items: any[]) {
     if (!this.myChart) {
       return;

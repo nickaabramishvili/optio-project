@@ -97,13 +97,13 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
+
+  <mat-spinner class="spinner" *ngIf="loading$ | async"></mat-spinner>
+
   <mat-paginator
     [length]="resultsLength"
     [pageSize]="50"
     aria-label="Select page elements"
   >
   </mat-paginator>
-  <ng-container *ngIf="loading$ | async">
-    <mat-spinner></mat-spinner>
-  </ng-container>
 </div>

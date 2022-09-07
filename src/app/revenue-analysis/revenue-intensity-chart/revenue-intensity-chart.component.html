@@ -1,1 +1,6 @@
-<div #intensityChart id="intensityChart">Some text</div>
+<div class="revenue-intensity-chart-wrapper">
+  <div #intensityChart id="intensityChart">Some text</div>
+  <ng-container *ngIf="loading">
+    <mat-spinner class="spinner"></mat-spinner>
+  </ng-container>
+</div>

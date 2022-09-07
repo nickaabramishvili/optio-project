@@ -1,6 +1,16 @@
+.revenue-intensity-chart-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .spinner.mat-progress-spinner {
+    position: absolute;
+  }
+}
+
 #intensityChart {
   position: relative;
-  height: 600px;
+  height: 500px;
   width: 100%;
   overflow: hidden;
 }

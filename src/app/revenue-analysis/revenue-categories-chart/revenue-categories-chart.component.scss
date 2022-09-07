@@ -1,3 +1,13 @@
+.revenue-categories-chart-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .spinner.mat-progress-spinner {
+    position: absolute;
+  }
+}
+
 #main {
   position: relative;
   height: 600px;

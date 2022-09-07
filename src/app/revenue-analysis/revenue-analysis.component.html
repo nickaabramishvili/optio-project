@@ -8,12 +8,11 @@
     [loading]="chartCategoryDataisLoading"
   >
   </app-revenue-categories-chart>
+  <app-revenue-intensity-chart
+    [data]="chartIntensData"
+    [loading]="chartIntensityDataisLoading"
+  ></app-revenue-intensity-chart>
 </div>
-
-<app-revenue-intensity-chart
-  [data]="chartIntensData"
-  *ngIf="!chartIntensDataisLoading"
-></app-revenue-intensity-chart>
 
 <div class="table-wrapper">
   <app-every-day-facts-table

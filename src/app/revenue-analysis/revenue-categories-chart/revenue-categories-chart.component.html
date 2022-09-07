@@ -1,15 +1,6 @@
-<div style="position: relative">
+<div class="revenue-categories-chart-wrapper">
   <div #main id="main">Some text</div>
-  <div
-    *ngIf="loading"
-    style="
-      position: absolute;
-      top: 10px;
-      width: 100px;
-      height: 100px;
-      background: red;
-    "
-  >
-    "LOADING DATA"
-  </div>
+  <ng-container *ngIf="loading">
+    <mat-spinner class="spinner"></mat-spinner>
+  </ng-container>
 </div>
