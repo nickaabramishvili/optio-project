@@ -5,6 +5,8 @@ import {
   ViewChild,
   Input,
   ChangeDetectionStrategy,
+  OnChanges,
+  SimpleChanges,
 } from '@angular/core';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatSort, Sort } from '@angular/material/sort';
@@ -30,7 +32,7 @@ import { PeriodicElement } from '../../shared/models/table-data.model';
   styleUrls: ['./every-day-facts-table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EveryDayFactsTableComponent implements AfterViewInit {
+export class EveryDayFactsTableComponent implements AfterViewInit, OnChanges {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   private dateRange$ = new BehaviorSubject<DateRange>({
@@ -38,8 +40,17 @@ export class EveryDayFactsTableComponent implements AfterViewInit {
     endDate: null,
   });
 
-  @Input() set dateRange(data: DateRange) {
-    this.dateRange$.next(data);
+  @Input() dateRange!: DateRange;
+
+  ngOnChanges(changes: SimpleChanges) {
+    for (let propName in changes) {
+      let change = changes[propName];
+
+      let curVal = JSON.stringify(change.currentValue);
+      let prevVal = JSON.stringify(change.previousValue);
+      let changeLog = `${propName}: currentValue = ${curVal}, previousValue = ${prevVal}`;
+    }
+    this.dateRange$.next(this.dateRange);
   }
 
   loading$ = new BehaviorSubject<boolean>(false);

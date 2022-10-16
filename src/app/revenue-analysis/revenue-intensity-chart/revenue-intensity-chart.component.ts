@@ -4,7 +4,10 @@ import {
   ViewChild,
   ElementRef,
   AfterViewInit,
+  OnChanges,
+  SimpleChanges,
 } from '@angular/core';
+import { DateRange } from '../../shared/models/date-range.model';
 import * as echarts from 'echarts';
 import * as moment from 'moment';
 import { TransactionItem } from '../../shared/models/transaction-item.model';
@@ -15,9 +18,29 @@ type EChartsOption = echarts.EChartsOption;
   templateUrl: './revenue-intensity-chart.component.html',
   styleUrls: ['./revenue-intensity-chart.component.scss'],
 })
-export class RevenueIntensityChartComponent implements AfterViewInit {
+export class RevenueIntensityChartComponent
+  implements AfterViewInit, OnChanges
+{
   @ViewChild('intensityChart') intensityChart!: ElementRef;
+
+  @Input() dateRange!: DateRange;
+
   @Input() loading = false;
+  option: any = {
+    tooltip: {},
+    visualMap: {
+      min: 0,
+      max: 100000,
+      type: 'piecewise',
+      orient: 'horizontal',
+      left: 'center',
+      top: '65',
+    },
+    calendar: [],
+    series: [],
+  };
+
+  dateRanges: { [key: string]: string[] } = {};
   @Input() set data(items: TransactionItem[]) {
     if (!this.myChart) {
       return;
@@ -26,6 +49,8 @@ export class RevenueIntensityChartComponent implements AfterViewInit {
     this.option.calendar = [];
     this.option.series = [];
     const dataSeries: { [key: string]: any[] } = {};
+
+    // this.dateRanges.forEach()
     items.forEach((item) => {
       const year = moment(item.dimension).year().toString();
       if (!dataSeries[year]) {
@@ -42,13 +67,13 @@ export class RevenueIntensityChartComponent implements AfterViewInit {
         ]);
       }
     });
-
     let top = 120;
     let index = 0;
-    for (const [key, value] of Object.entries(dataSeries)) {
+
+    for (const [key, value] of Object.entries(this.dateRanges)) {
       this.option.calendar.push({
         top,
-        range: key.toString(),
+        range: value,
         orient: 'horizontal',
         cellSize: ['auto', 12],
       });
@@ -56,7 +81,7 @@ export class RevenueIntensityChartComponent implements AfterViewInit {
       this.option.series.push({
         type: 'heatmap',
         coordinateSystem: 'calendar',
-        data: value,
+        data: dataSeries[key],
         calendarIndex: index,
       });
       top += 120;
@@ -66,22 +91,46 @@ export class RevenueIntensityChartComponent implements AfterViewInit {
     this.myChart.setOption(this.option, true);
   }
 
-  option: any = {
-    tooltip: {},
-    visualMap: {
-      min: 0,
-      max: 100000,
-      type: 'piecewise',
-      orient: 'horizontal',
-      left: 'center',
-      top: '65',
-    },
-    calendar: [],
-    series: [],
-  };
   myChart: any;
 
   ngAfterViewInit() {
     this.myChart = echarts.init(this.intensityChart.nativeElement!);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const dateRange = changes['dateRange'];
+    if (
+      dateRange &&
+      dateRange.currentValue.startDate &&
+      dateRange.currentValue.endDate
+    ) {
+      this.dateRanges = {};
+      const startDate = moment(dateRange.currentValue.startDate);
+      const endDate = moment(dateRange.currentValue.endDate);
+
+      const isOneMonth = startDate.isSame(endDate, 'month');
+      while (
+        endDate > startDate ||
+        startDate.format('M') === endDate.format('M')
+      ) {
+        const monthYear = startDate.format('yyyy');
+        if (!this.dateRanges[monthYear]) {
+          this.dateRanges[monthYear] = [
+            startDate.startOf('month').format('yyyy-MM-DD'),
+          ];
+
+          if (isOneMonth) {
+            this.dateRanges[monthYear].push(
+              startDate.endOf('month').format('yyyy-MM-DD')
+            );
+          }
+        } else {
+          this.dateRanges[monthYear][1] = startDate
+            .endOf('month')
+            .format('yyyy-MM-DD');
+        }
+        startDate.add(1, 'month');
+      }
+    }
   }
 }
