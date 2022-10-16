@@ -5,6 +5,8 @@ import {
   ElementRef,
   ViewChild,
   Input,
+  OnChanges,
+  SimpleChanges,
 } from '@angular/core';
 import { CategoriesChartData } from '../../shared/models/categories-chart-data.model';
 import * as echarts from 'echarts';
@@ -13,17 +15,19 @@ import * as echarts from 'echarts';
   templateUrl: './revenue-categories-chart.component.html',
   styleUrls: ['./revenue-categories-chart.component.scss'],
 })
-export class RevenueCategoriesChartComponent implements AfterViewInit {
+export class RevenueCategoriesChartComponent
+  implements AfterViewInit, OnChanges
+{
   @ViewChild('main') main!: ElementRef;
 
   @Input() loading = false;
-  @Input() set data(items: CategoriesChartData[]) {
-    if (!this.myChart) {
-      return;
-    }
+  @Input() data!: CategoriesChartData[];
 
-    this.option.series[0].data = items;
-    this.myChart.setOption(this.option, true);
+  ngOnChanges(changes: SimpleChanges) {
+    if (this.myChart && changes['data']) {
+      this.option.series[0].data = this.data;
+      this.myChart.setOption(this.option, true);
+    }
   }
 
   myChart: any;

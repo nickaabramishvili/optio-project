@@ -43,14 +43,9 @@ export class EveryDayFactsTableComponent implements AfterViewInit, OnChanges {
   @Input() dateRange!: DateRange;
 
   ngOnChanges(changes: SimpleChanges) {
-    for (let propName in changes) {
-      let change = changes[propName];
-
-      let curVal = JSON.stringify(change.currentValue);
-      let prevVal = JSON.stringify(change.previousValue);
-      let changeLog = `${propName}: currentValue = ${curVal}, previousValue = ${prevVal}`;
+    if (changes['dateRange'].currentValue.startDate) {
+      this.dateRange$.next(this.dateRange);
     }
-    this.dateRange$.next(this.dateRange);
   }
 
   loading$ = new BehaviorSubject<boolean>(false);

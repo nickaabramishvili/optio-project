@@ -11,6 +11,7 @@ import { DateRange } from '../../shared/models/date-range.model';
 import * as echarts from 'echarts';
 import * as moment from 'moment';
 import { TransactionItem } from '../../shared/models/transaction-item.model';
+import { CategoriesChartData } from 'src/app/shared/models/categories-chart-data.model';
 type EChartsOption = echarts.EChartsOption;
 
 @Component({
@@ -24,6 +25,8 @@ export class RevenueIntensityChartComponent
   @ViewChild('intensityChart') intensityChart!: ElementRef;
 
   @Input() dateRange!: DateRange;
+
+  @Input() data!: TransactionItem[];
 
   @Input() loading = false;
   option: any = {
@@ -41,55 +44,6 @@ export class RevenueIntensityChartComponent
   };
 
   dateRanges: { [key: string]: string[] } = {};
-  @Input() set data(items: TransactionItem[]) {
-    if (!this.myChart) {
-      return;
-    }
-
-    this.option.calendar = [];
-    this.option.series = [];
-    const dataSeries: { [key: string]: any[] } = {};
-
-    // this.dateRanges.forEach()
-    items.forEach((item) => {
-      const year = moment(item.dimension).year().toString();
-      if (!dataSeries[year]) {
-        dataSeries[year] = [
-          [
-            echarts.format.formatTime('yyyy-MM-dd', item.dimension),
-            item.volume / 100,
-          ],
-        ];
-      } else {
-        dataSeries[year].push([
-          echarts.format.formatTime('yyyy-MM-dd', item.dimension),
-          item.volume / 100,
-        ]);
-      }
-    });
-    let top = 120;
-    let index = 0;
-
-    for (const [key, value] of Object.entries(this.dateRanges)) {
-      this.option.calendar.push({
-        top,
-        range: value,
-        orient: 'horizontal',
-        cellSize: ['auto', 12],
-      });
-
-      this.option.series.push({
-        type: 'heatmap',
-        coordinateSystem: 'calendar',
-        data: dataSeries[key],
-        calendarIndex: index,
-      });
-      top += 120;
-      index += 1;
-    }
-
-    this.myChart.setOption(this.option, true);
-  }
 
   myChart: any;
 
@@ -98,6 +52,55 @@ export class RevenueIntensityChartComponent
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (this.myChart && changes['data']) {
+      if (!this.myChart) {
+        return;
+      }
+
+      this.option.calendar = [];
+      this.option.series = [];
+      const dataSeries: { [key: string]: any[] } = {};
+
+      // this.dateRanges.forEach()
+      this.data.forEach((item) => {
+        const year = moment(item.dimension).year().toString();
+        if (!dataSeries[year]) {
+          dataSeries[year] = [
+            [
+              echarts.format.formatTime('yyyy-MM-dd', item.dimension),
+              item.volume / 100,
+            ],
+          ];
+        } else {
+          dataSeries[year].push([
+            echarts.format.formatTime('yyyy-MM-dd', item.dimension),
+            item.volume / 100,
+          ]);
+        }
+      });
+      let top = 120;
+      let index = 0;
+
+      for (const [key, value] of Object.entries(this.dateRanges)) {
+        this.option.calendar.push({
+          top,
+          range: value,
+          orient: 'horizontal',
+          cellSize: ['auto', 12],
+        });
+
+        this.option.series.push({
+          type: 'heatmap',
+          coordinateSystem: 'calendar',
+          data: dataSeries[key],
+          calendarIndex: index,
+        });
+        top += 120;
+        index += 1;
+      }
+
+      this.myChart.setOption(this.option, true);
+    }
     const dateRange = changes['dateRange'];
     if (
       dateRange &&
