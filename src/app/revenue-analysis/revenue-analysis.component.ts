@@ -14,18 +14,19 @@ import { RevenueAnalysisSelectors } from '../store/selectors';
 })
 export class RevenueAnalysisComponent {
   constructor(private factsService: FactsService, private store: Store) {}
-  chartData$ = this.store.select(
-    RevenueAnalysisSelectors.selectRevenueAnalysisChartData
+  categoryChartData$ = this.store.select(
+    RevenueAnalysisSelectors.selectRevenueAnalysisCategoryChartData
+  );
+  intensityChartData$ = this.store.select(
+    RevenueAnalysisSelectors.selectRevenueAnalysisIntensityChartData
   );
   loading$ = this.store.select(RevenueAnalysisSelectors.selectLoadingStatus);
   dateRange: DateRange = { startDate: null, endDate: null };
   chartCategoryData: CategoriesChartData[] = [];
   chartIntensData: TransactionItem[] = [];
   chartCategoryDataisLoading: boolean = false;
-  chartIntensityDataisLoading: boolean = false;
 
   onDateChanged(dateRange: DateRange) {
-    this.dateRange = dateRange;
     // this.loadCategoryChartdata(dateRange);
     // this.loadIntensityChartData(dateRange);
     this.store.dispatch(
@@ -35,33 +36,29 @@ export class RevenueAnalysisComponent {
     );
   }
 
-  loadCategoryChartdata(dateRange: DateRange) {
-    this.chartCategoryDataisLoading = true;
-    this.chartCategoryData = [];
-    this.factsService
-      .getTransactions('category', dateRange)
-      .pipe(
-        map((response) => {
-          const data: { name: string; value: number }[] = [];
-          response.data.forEach((item) =>
-            data.push({ name: item.dimension, value: item.volume / 100 })
-          );
-          return data;
-        })
-      )
-      .subscribe((response: any) => {
-        this.chartCategoryDataisLoading = false;
-        this.chartCategoryData = response;
-      });
-  }
+  // loadCategoryChartdata(dateRange: DateRange) {
+  //   this.chartCategoryData = [];
+  //   this.factsService
+  //     .getTransactions('category', dateRange)
+  //     .pipe(
+  //       map((response) => {
+  //         const data: { name: string; value: number }[] = [];
+  //         response.data.forEach((item) =>
+  //           data.push({ name: item.dimension, value: item.volume / 100 })
+  //         );
+  //         return data;
+  //       })
+  //     )
+  //     .subscribe((response: any) => {
+  //       this.chartCategoryData = response;
+  //     });
+  // }
 
-  loadIntensityChartData(dateRange: DateRange) {
-    this.chartIntensityDataisLoading = true;
-    this.factsService
-      .getTransactions('date', dateRange)
-      .subscribe((response: any) => {
-        this.chartIntensityDataisLoading = false;
-        this.chartIntensData = response.data;
-      });
-  }
+  // loadIntensityChartData(dateRange: DateRange) {
+  //   this.factsService
+  //     .getTransactions('date', dateRange)
+  //     .subscribe((response: any) => {
+  //       this.chartIntensData = response.data;
+  //     });
+  // }
 }

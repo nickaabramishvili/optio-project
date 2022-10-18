@@ -3,14 +3,14 @@
 <!-- <app-filters (datechanged)="onDatechanged($event)"></app-filters> -->
 <div class="charts-wrapper">
   <app-revenue-categories-chart
-    [data]="chartData$ | async"
+    [data]="categoryChartData$ | async"
     [loading]="loading$ | async"
   >
   </app-revenue-categories-chart>
   <app-revenue-intensity-chart
-    [data]="chartIntensData"
+    [data]="intensityChartData$ | async"
     [dateRange]="dateRange"
-    [loading]="chartIntensityDataisLoading"
+    [loading]="loading$ | async"
   ></app-revenue-intensity-chart>
 </div>
 

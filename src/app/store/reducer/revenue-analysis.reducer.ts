@@ -4,38 +4,12 @@ import { TransactionItem } from 'src/app/shared/models/transaction-item.model';
 import { RevenueAnalysisActions, RevenueAnalysisApiActions } from '../actions';
 import { RevenueAnalysisState } from '../state';
 export const initialState: RevenueAnalysisState = {
-  chartData: [],
+  categoryChartData: [],
+  intensityChartData: [],
   filter: null,
   loading: false,
   tableData: [],
 };
-
-const data: TransactionItem[] = [
-  {
-    average: 4,
-    dimension: 'other income',
-    dimensionId: 0,
-    quantity: 299,
-    type: 0,
-    volume: 543,
-  },
-  {
-    average: 4,
-    dimension: 'salary',
-    dimensionId: 0,
-    quantity: 299,
-    type: 0,
-    volume: 543,
-  },
-  {
-    average: 4,
-    dimension: 'dividen',
-    dimensionId: 0,
-    quantity: 299,
-    type: 0,
-    volume: 543,
-  },
-];
 
 export const RevenueAnalysisReducer = createReducer(
   initialState,
@@ -61,12 +35,16 @@ export const RevenueAnalysisReducer = createReducer(
   ),
   on(
     RevenueAnalysisApiActions.searchClickedSuccess,
-    (state, { payLoad }): RevenueAnalysisState => {
+    (
+      state,
+      { categoryChartData, intensityChartData }
+    ): RevenueAnalysisState => {
       delay(2000);
       return {
         ...state,
         loading: false,
-        chartData: payLoad,
+        categoryChartData: categoryChartData,
+        intensityChartData: intensityChartData,
       };
     }
   ),

@@ -26,9 +26,9 @@ export class RevenueIntensityChartComponent
 
   @Input() dateRange!: DateRange;
 
-  @Input() data!: TransactionItem[];
+  @Input() data!: TransactionItem[] | null;
 
-  @Input() loading = false;
+  @Input() loading!: boolean | null;
   option: any = {
     tooltip: {},
     visualMap: {
@@ -62,7 +62,7 @@ export class RevenueIntensityChartComponent
       const dataSeries: { [key: string]: any[] } = {};
 
       // this.dateRanges.forEach()
-      this.data.forEach((item) => {
+      this.data?.forEach((item) => {
         const year = moment(item.dimension).year().toString();
         if (!dataSeries[year]) {
           dataSeries[year] = [
@@ -78,6 +78,7 @@ export class RevenueIntensityChartComponent
           ]);
         }
       });
+
       let top = 120;
       let index = 0;
 

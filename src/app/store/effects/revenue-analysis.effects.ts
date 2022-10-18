@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { concatMap, map, pipe } from 'rxjs';
+import { concatMap, forkJoin, map, pipe } from 'rxjs';
 import { FactsService } from 'src/app/shared/services/facts.service';
 import { RevenueAnalysisActions, RevenueAnalysisApiActions } from '../actions';
 
@@ -11,10 +11,15 @@ export class RevenueAnalysisEffects {
     return this.actions$.pipe(
       ofType(RevenueAnalysisActions.searchClicked),
       concatMap(({ payLoad }) => {
-        return this.service.getTransactions('category', payLoad).pipe(
-          map((res) => {
+        return forkJoin([
+          this.service.getTransactions('category', payLoad),
+          this.service.getTransactions('date', payLoad),
+          // es rxjs peratori sashvalebas gadzlevs ertxle mivamrto or servis
+        ]).pipe(
+          map(([categoriesChartResponse, intensityChartResponse]) => {
             return RevenueAnalysisApiActions.searchClickedSuccess({
-              payLoad: res.data,
+              categoryChartData: categoriesChartResponse.data,
+              intensityChartData: intensityChartResponse.data,
             });
           })
         );

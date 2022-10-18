@@ -5,13 +5,21 @@ export const revenueAnalysisState =
   createFeatureSelector<RevenueAnalysisState>('revenue_analysis');
 // aq states vigebt da zustad is saxeli unda davarqvat rac aq gadvecit ('revenue_analysis')
 
-export const selectRevenueAnalysisChartData = createSelector(
+export const selectRevenueAnalysisCategoryChartData = createSelector(
   revenueAnalysisState,
 
   (state) => {
-    state.chartData.map((res) => {
+    return state.categoryChartData.map((res) => {
       return { name: res.dimension, value: res.volume / 100 };
     });
+    // arsebuls masivs gadauvlsi da daaa brunebs axals da shecvlils itemebs
+  }
+);
+export const selectRevenueAnalysisIntensityChartData = createSelector(
+  revenueAnalysisState,
+
+  (state) => {
+    return state.intensityChartData;
     // arsebuls masivs gadauvlsi da daaa brunebs axals da shecvlils itemebs
   }
 );
