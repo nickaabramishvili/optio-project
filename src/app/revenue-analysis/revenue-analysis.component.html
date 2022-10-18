@@ -3,8 +3,8 @@
 <!-- <app-filters (datechanged)="onDatechanged($event)"></app-filters> -->
 <div class="charts-wrapper">
   <app-revenue-categories-chart
-    [data]="chartCategoryData"
-    [loading]="chartCategoryDataisLoading"
+    [data]="chartData$ | async"
+    [loading]="loading$ | async"
   >
   </app-revenue-categories-chart>
   <app-revenue-intensity-chart

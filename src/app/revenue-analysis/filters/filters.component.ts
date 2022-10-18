@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { FactsService } from '../../shared/services/facts.service';
 import * as moment from 'moment';
 
@@ -9,13 +9,13 @@ import * as moment from 'moment';
   styleUrls: ['./filters.component.scss'],
 })
 export class FiltersComponent implements OnInit {
-  dateFilterForm: FormGroup;
+  dateFilterForm: UntypedFormGroup;
   @Output() dateChanged: EventEmitter<{ startDate: string; endDate: string }> =
     new EventEmitter();
   constructor(private factsService: FactsService) {
-    this.dateFilterForm = new FormGroup({
-      startDate: new FormControl('', [Validators.required]),
-      endDate: new FormControl('', [Validators.required]),
+    this.dateFilterForm = new UntypedFormGroup({
+      startDate: new UntypedFormControl('', [Validators.required]),
+      endDate: new UntypedFormControl('', [Validators.required]),
     });
   }
   onSubmit() {

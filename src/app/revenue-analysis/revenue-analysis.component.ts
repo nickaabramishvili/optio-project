@@ -5,6 +5,8 @@ import { DateRange } from '../shared/models/date-range.model';
 import { CategoriesChartData } from '../shared/models/categories-chart-data.model';
 import { TransactionItem } from '../shared/models/transaction-item.model';
 import { Store } from '@ngrx/store';
+import { RevenueAnalysisActions } from '../store/actions';
+import { RevenueAnalysisSelectors } from '../store/selectors';
 @Component({
   selector: 'app-revenue-analysis',
   templateUrl: './revenue-analysis.component.html',
@@ -12,6 +14,10 @@ import { Store } from '@ngrx/store';
 })
 export class RevenueAnalysisComponent {
   constructor(private factsService: FactsService, private store: Store) {}
+  chartData$ = this.store.select(
+    RevenueAnalysisSelectors.selectRevenueAnalysisChartData
+  );
+  loading$ = this.store.select(RevenueAnalysisSelectors.selectLoadingStatus);
   dateRange: DateRange = { startDate: null, endDate: null };
   chartCategoryData: CategoriesChartData[] = [];
   chartIntensData: TransactionItem[] = [];
@@ -20,8 +26,13 @@ export class RevenueAnalysisComponent {
 
   onDateChanged(dateRange: DateRange) {
     this.dateRange = dateRange;
-    this.loadCategoryChartdata(dateRange);
-    this.loadIntensityChartData(dateRange);
+    // this.loadCategoryChartdata(dateRange);
+    // this.loadIntensityChartData(dateRange);
+    this.store.dispatch(
+      RevenueAnalysisActions.searchClicked({
+        payLoad: dateRange,
+      })
+    );
   }
 
   loadCategoryChartdata(dateRange: DateRange) {

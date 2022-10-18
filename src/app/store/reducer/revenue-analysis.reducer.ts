@@ -1,4 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
+import { delay } from 'rxjs';
 import { TransactionItem } from 'src/app/shared/models/transaction-item.model';
 import { RevenueAnalysisActions, RevenueAnalysisApiActions } from '../actions';
 import { RevenueAnalysisState } from '../state';
@@ -61,10 +62,11 @@ export const RevenueAnalysisReducer = createReducer(
   on(
     RevenueAnalysisApiActions.searchClickedSuccess,
     (state, { payLoad }): RevenueAnalysisState => {
+      delay(2000);
       return {
         ...state,
         loading: false,
-        chartData: data,
+        chartData: payLoad,
       };
     }
   ),
