@@ -4,13 +4,14 @@ import { FactsService } from '../shared/services/facts.service';
 import { DateRange } from '../shared/models/date-range.model';
 import { CategoriesChartData } from '../shared/models/categories-chart-data.model';
 import { TransactionItem } from '../shared/models/transaction-item.model';
+import { Store } from '@ngrx/store';
 @Component({
   selector: 'app-revenue-analysis',
   templateUrl: './revenue-analysis.component.html',
   styleUrls: ['./revenue-analysis.component.scss'],
 })
 export class RevenueAnalysisComponent {
-  constructor(private factsService: FactsService) {}
+  constructor(private factsService: FactsService, private store: Store) {}
   dateRange: DateRange = { startDate: null, endDate: null };
   chartCategoryData: CategoriesChartData[] = [];
   chartIntensData: TransactionItem[] = [];

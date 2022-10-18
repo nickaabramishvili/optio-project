@@ -5,6 +5,8 @@ import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { StoreModule } from '@ngrx/store';
+import { RevenueAnalysisReducer } from './store/reducer/revenue-analysis.reducer';
 
 @NgModule({
   declarations: [AppComponent, PageNotFoundComponent],
@@ -13,6 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    StoreModule.forRoot({ revenue_analysis: RevenueAnalysisReducer }),
   ],
 
   bootstrap: [AppComponent],
