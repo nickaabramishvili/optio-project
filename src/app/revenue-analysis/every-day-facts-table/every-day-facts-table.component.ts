@@ -74,7 +74,7 @@ export class EveryDayFactsTableComponent implements AfterViewInit, OnChanges {
         }),
         switchMap(() =>
           this.factsService
-            .getFactsByDay(this.dateRange$.value, {
+            .getTableData(this.dateRange$.value, {
               sortBy: this.sort.active,
               sortDirection: this.sort.direction,
               pageIndex: this.paginator.pageIndex,

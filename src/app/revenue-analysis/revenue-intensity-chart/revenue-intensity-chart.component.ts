@@ -52,7 +52,7 @@ export class RevenueIntensityChartComponent
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.myChart && changes['data'] !== null) {
+    if (this.myChart && changes['data']) {
       if (!this.myChart) {
         return;
       }

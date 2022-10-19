@@ -14,8 +14,8 @@ export class RevenueAnalysisEffects {
         // concatmapshi gadamomecema am observablis bolo value
 
         return forkJoin([
-          this.service.getTransactions('category', payLoadOfDateRange),
-          this.service.getTransactions('date', payLoadOfDateRange),
+          this.service.getChartsData('category', payLoadOfDateRange),
+          this.service.getChartsData('date', payLoadOfDateRange),
           // es rxjs peratori sashvalebas gadzlevs ertxle mivamrto or servis
         ]).pipe(
           map(([categoriesChartResponse, intensityChartResponse]) => {

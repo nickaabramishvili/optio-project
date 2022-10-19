@@ -16,7 +16,7 @@ export class FactsService {
   constructor(private httpClient: HttpClient) {}
 
   // for charts
-  getTransactions(
+  getChartsData(
     dimension: string,
     dateRange: DateRange
   ): Observable<TransactionsResponse> {
@@ -32,7 +32,7 @@ export class FactsService {
   }
 
   // for table
-  getFactsByDay(
+  getTableData(
     dateRange: DateRange,
     { pageIndex, sortBy, sortDirection }: FactsByDayPagination
   ): Observable<FactsByDayResponse> {
