@@ -19,7 +19,7 @@ export const selectRevenueAnalysisIntensityChartData = createSelector(
   revenueAnalysisState,
 
   (state) => {
-    return state.intensityChartData;
+    return state.intensityChartData
     // arsebuls masivs gadauvlsi da daaa brunebs axals da shecvlils itemebs
   }
 );
@@ -30,5 +30,12 @@ export const selectLoadingStatus = createSelector(
   revenueAnalysisState,
   (state) => {
     return state.loading;
+  }
+);
+
+export const selectFilterDateRange = createSelector(
+  revenueAnalysisState,
+  (state) => {
+    return state.filterDateRange;
   }
 );

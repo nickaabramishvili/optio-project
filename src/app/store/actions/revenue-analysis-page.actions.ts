@@ -17,7 +17,7 @@ export const tableSortChanged = createAction(
 
 export const searchClicked = createAction(
   '[Revenue Analysis Page] Search Clicked',
-  props<{ payLoad: DateRange }>()
+  props<{ payLoadOfDateRange: DateRange }>()
 );
 
 // kide ori action erti soritstvis da meore searchistvis

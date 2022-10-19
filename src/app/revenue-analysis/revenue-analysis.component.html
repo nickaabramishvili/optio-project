@@ -7,9 +7,9 @@
     [loading]="loading$ | async"
   >
   </app-revenue-categories-chart>
-  <app-revenue-intensity-chart
+  <app-revenue-intensity-chart 
     [data]="intensityChartData$ | async"
-    [dateRange]="dateRange"
+    [dateRange]="payLoadOfDateRange$ | async"
     [loading]="loading$ | async"
   ></app-revenue-intensity-chart>
 </div>

@@ -6,7 +6,7 @@ import { RevenueAnalysisState } from '../state';
 export const initialState: RevenueAnalysisState = {
   categoryChartData: [],
   intensityChartData: [],
-  filter: null,
+  filterDateRange: null,
   loading: false,
   tableData: [],
 };
@@ -20,16 +20,17 @@ export const RevenueAnalysisReducer = createReducer(
     (state, { payload }): RevenueAnalysisState => {
       return {
         ...state,
-        filter: payload,
+        filterDateRange: payload,
       };
     }
   ),
   on(
     RevenueAnalysisActions.searchClicked,
-    (state, {}): RevenueAnalysisState => {
+    (state, {payLoadOfDateRange}): RevenueAnalysisState => {
       return {
         ...state,
         loading: true,
+        filterDateRange:payLoadOfDateRange
       };
     }
   ),

@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { FactsService } from '../../shared/services/facts.service';
 import * as moment from 'moment';
+import { DateRange } from 'src/app/shared/models/date-range.model';
 
 @Component({
   selector: 'app-filters',
@@ -10,7 +11,7 @@ import * as moment from 'moment';
 })
 export class FiltersComponent implements OnInit {
   dateFilterForm: UntypedFormGroup;
-  @Output() dateChanged: EventEmitter<{ startDate: string; endDate: string }> =
+  @Output() dateChanged: EventEmitter<DateRange> =
     new EventEmitter();
   constructor(private factsService: FactsService) {
     this.dateFilterForm = new UntypedFormGroup({

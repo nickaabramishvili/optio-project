@@ -3,7 +3,7 @@ import { TransactionItem } from 'src/app/shared/models/transaction-item.model';
 
 export interface RevenueAnalysisState {
   loading: boolean;
-  filter: DateRange | null;
+  filterDateRange: DateRange | null;
   categoryChartData: TransactionItem[];
   intensityChartData: TransactionItem[];
 

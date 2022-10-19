@@ -24,9 +24,9 @@ export class RevenueIntensityChartComponent
 {
   @ViewChild('intensityChart') intensityChart!: ElementRef;
 
-  @Input() dateRange!: DateRange;
+  @Input() dateRange!: DateRange | null;
 
-  @Input() data!: TransactionItem[] | null;
+  @Input() data: TransactionItem[] | null = [];
 
   @Input() loading!: boolean | null;
   option: any = {
@@ -52,17 +52,18 @@ export class RevenueIntensityChartComponent
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.myChart && changes['data']) {
+    if (this.myChart && changes['data'] !== null) {
       if (!this.myChart) {
         return;
       }
+      console.log(changes['data'])
 
       this.option.calendar = [];
       this.option.series = [];
       const dataSeries: { [key: string]: any[] } = {};
 
       // this.dateRanges.forEach()
-      this.data?.forEach((item) => {
+      (this.data as TransactionItem[]).forEach((item) => {
         const year = moment(item.dimension).year().toString();
         if (!dataSeries[year]) {
           dataSeries[year] = [
@@ -81,7 +82,7 @@ export class RevenueIntensityChartComponent
 
       let top = 120;
       let index = 0;
-
+console.log(this.dateRanges)
       for (const [key, value] of Object.entries(this.dateRanges)) {
         this.option.calendar.push({
           top,
@@ -101,6 +102,7 @@ export class RevenueIntensityChartComponent
       }
 
       this.myChart.setOption(this.option, true);
+      console.log(this.option)
     }
     const dateRange = changes['dateRange'];
     if (

@@ -21,7 +21,7 @@ export class RevenueCategoriesChartComponent
   @ViewChild('main') main!: ElementRef;
 
   @Input() loading!: boolean | null;
-  @Input() data!: CategoriesChartData[] | any;
+  @Input() data!: CategoriesChartData[] | null;
 
   ngOnChanges(changes: SimpleChanges) {
     if (this.myChart && changes['data']) {
