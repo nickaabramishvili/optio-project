@@ -56,7 +56,6 @@ export class RevenueIntensityChartComponent
       if (!this.myChart) {
         return;
       }
-      console.log(changes['data'])
 
       this.option.calendar = [];
       this.option.series = [];
@@ -82,7 +81,7 @@ export class RevenueIntensityChartComponent
 
       let top = 120;
       let index = 0;
-console.log(this.dateRanges)
+
       for (const [key, value] of Object.entries(this.dateRanges)) {
         this.option.calendar.push({
           top,
@@ -102,13 +101,12 @@ console.log(this.dateRanges)
       }
 
       this.myChart.setOption(this.option, true);
-      console.log(this.option)
     }
     const dateRange = changes['dateRange'];
     if (
       dateRange &&
-      dateRange.currentValue.startDate &&
-      dateRange.currentValue.endDate
+      dateRange.currentValue?.startDate &&
+      dateRange.currentValue?.endDate
     ) {
       this.dateRanges = {};
       const startDate = moment(dateRange.currentValue.startDate);

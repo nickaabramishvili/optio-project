@@ -12,17 +12,15 @@ export class RevenueAnalysisEffects {
       ofType(RevenueAnalysisActions.searchClicked),
       concatMap(({ payLoadOfDateRange }) => {
         // concatmapshi gadamomecema am observablis bolo value
-        console.log(payLoadOfDateRange)
+
         return forkJoin([
           this.service.getTransactions('category', payLoadOfDateRange),
           this.service.getTransactions('date', payLoadOfDateRange),
           // es rxjs peratori sashvalebas gadzlevs ertxle mivamrto or servis
         ]).pipe(
           map(([categoriesChartResponse, intensityChartResponse]) => {
-            console.log(categoriesChartResponse, intensityChartResponse)
-            // 
+            //
             return RevenueAnalysisApiActions.searchClickedSuccess({
-
               categoryChartData: categoriesChartResponse.data,
               intensityChartData: intensityChartResponse.data,
             });

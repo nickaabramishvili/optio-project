@@ -17,13 +17,13 @@ export class RevenueAnalysisComponent {
   categoryChartData$ = this.store.select(
     RevenueAnalysisSelectors.selectRevenueAnalysisCategoryChartData
   );
-  
+
   intensityChartData$ = this.store.select(
     RevenueAnalysisSelectors.selectRevenueAnalysisIntensityChartData
   );
-  payLoadOfDateRange$ = this.store.select(
+  dateRangeFromFilterData$ = this.store.select(
     RevenueAnalysisSelectors.selectFilterDateRange
-  )
+  );
   loading$ = this.store.select(RevenueAnalysisSelectors.selectLoadingStatus);
   dateRange: DateRange = { startDate: null, endDate: null };
   chartCategoryData: CategoriesChartData[] = [];
