@@ -15,6 +15,7 @@ export const selectRevenueAnalysisCategoryChartData = createSelector(
     // arsebuls masivs gadauvlsi da daaa brunebs axals da shecvlils itemebs
   }
 );
+
 export const selectRevenueAnalysisIntensityChartData = createSelector(
   revenueAnalysisState,
 

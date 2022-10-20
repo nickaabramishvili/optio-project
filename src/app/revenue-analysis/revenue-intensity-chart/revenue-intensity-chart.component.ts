@@ -57,6 +57,8 @@ export class RevenueIntensityChartComponent
         return;
       }
 
+      // es piroba aris amosagebi ar
+
       this.option.calendar = [];
       this.option.series = [];
       const dataSeries: { [key: string]: any[] } = {};

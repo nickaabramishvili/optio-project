@@ -7,8 +7,8 @@ export interface RevenueAnalysisState {
   intensityChartData: TransactionItem[];
   tableData: TableDisplayedData;
   filterDateRange: DateRange | null;
-  loadingForCategoriesChart: false;
-  loadingForIntensityChart: false;
-  loadingforTable: false;
+  loadingForCategoriesChart: boolean;
+  loadingForIntensityChart: boolean;
+  loadingforTable: boolean;
   // f2 s r odaawve yvelgan mtel reposhi yvelga ngadaarqmevs
 }

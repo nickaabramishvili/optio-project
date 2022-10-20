@@ -1,5 +1,4 @@
 import { createReducer, on } from '@ngrx/store';
-import { delay } from 'rxjs';
 import { TransactionItem } from 'src/app/shared/models/transaction-item.model';
 import { RevenueAnalysisActions, RevenueAnalysisApiActions } from '../actions';
 import { RevenueAnalysisState } from '../state';
@@ -27,28 +26,55 @@ export const RevenueAnalysisReducer = createReducer(
       return {
         ...state,
         filterDateRange: dateRangeFromForm,
+        loadingForCategoriesChart: true,
+        loadingForIntensityChart: true,
+        loadingforTable: true,
       };
     }
   ),
   on(
-    RevenueAnalysisApiActions.searchClickedFailed,
+    RevenueAnalysisApiActions.categoryDataFailed,
     (state, { payLoad }): RevenueAnalysisState => {
       return {
         ...state,
+        loadingForCategoriesChart: false,
       };
     }
   ),
   on(
-    RevenueAnalysisApiActions.searchClickedSuccess,
+    RevenueAnalysisApiActions.categoryDataSuccess,
     (
       state,
-      { categoryChartData, intensityChartData }
-    ): RevenueAnalysisState => {
-      delay(2000);
+      { data }
+    ): // , intensityChartData
+    RevenueAnalysisState => {
       return {
         ...state,
-        categoryChartData: categoryChartData,
-        intensityChartData: intensityChartData,
+        categoryChartData: data,
+        loadingForCategoriesChart: false,
+      };
+    }
+  ),
+  on(
+    RevenueAnalysisApiActions.intensityDataSuccess,
+    (
+      state,
+      { data }
+    ): // , intensityChartData
+    RevenueAnalysisState => {
+      return {
+        ...state,
+        intensityChartData: data,
+        loadingForIntensityChart: false,
+      };
+    }
+  ),
+  on(
+    RevenueAnalysisApiActions.intensityDataFailed,
+    (state, { payLoad }): RevenueAnalysisState => {
+      return {
+        ...state,
+        loadingForIntensityChart: false,
       };
     }
   )

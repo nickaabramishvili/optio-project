@@ -7,21 +7,36 @@ import { RevenueAnalysisActions, RevenueAnalysisApiActions } from '../actions';
 @Injectable()
 export class RevenueAnalysisEffects {
   constructor(private actions$: Actions, private service: FactsService) {}
-  chartsData$ = createEffect(() => {
+  categoryChartsData$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(RevenueAnalysisActions.searchClicked),
       concatMap(({ dateRangeFromForm }) => {
         // concatmapshi gadamomecema am observablis bolo value
 
-        return forkJoin([
-          this.service.getChartsData('category', dateRangeFromForm),
-          this.service.getChartsData('date', dateRangeFromForm),
-        ]).pipe(
-          map(([categoriesChartResponse, intensityChartResponse]) => {
+        return this.service.getChartsData('category', dateRangeFromForm).pipe(
+          map((categoriesChartResponse) => {
             //
-            return RevenueAnalysisApiActions.searchClickedSuccess({
-              categoryChartData: categoriesChartResponse.data,
-              intensityChartData: intensityChartResponse.data,
+            return RevenueAnalysisApiActions.categoryDataSuccess({
+              data: categoriesChartResponse.data,
+              // intensityChartData: intensityChartResponse.data,
+            });
+          })
+        );
+      })
+    );
+  });
+
+  intensityChartsData$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(RevenueAnalysisActions.searchClicked),
+      concatMap(({ dateRangeFromForm }) => {
+        // concatmapshi gadamomecema am observablis bolo value
+
+        return this.service.getChartsData('date', dateRangeFromForm).pipe(
+          map((intensityChartResponse) => {
+            //
+            return RevenueAnalysisApiActions.intensityDataSuccess({
+              data: intensityChartResponse.data,
             });
           })
         );
