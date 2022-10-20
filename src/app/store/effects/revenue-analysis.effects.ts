@@ -7,16 +7,15 @@ import { RevenueAnalysisActions, RevenueAnalysisApiActions } from '../actions';
 @Injectable()
 export class RevenueAnalysisEffects {
   constructor(private actions$: Actions, private service: FactsService) {}
-  data$ = createEffect(() => {
+  chartsData$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(RevenueAnalysisActions.searchClicked),
-      concatMap(({ payLoadOfDateRange }) => {
+      concatMap(({ dateRangeFromForm }) => {
         // concatmapshi gadamomecema am observablis bolo value
 
         return forkJoin([
-          this.service.getChartsData('category', payLoadOfDateRange),
-          this.service.getChartsData('date', payLoadOfDateRange),
-          // es rxjs peratori sashvalebas gadzlevs ertxle mivamrto or servis
+          this.service.getChartsData('category', dateRangeFromForm),
+          this.service.getChartsData('date', dateRangeFromForm),
         ]).pipe(
           map(([categoriesChartResponse, intensityChartResponse]) => {
             //
@@ -29,10 +28,4 @@ export class RevenueAnalysisEffects {
       })
     );
   });
-
-  // gvadzlev sahsvalebas wian osbervabels moancemeb iaigo
-  //   effect yvelapris bolso agidzvreaba, jer action dispatchdeba mere  reducers ro gaivlsi shemova qa
-  // am acitonshisa yvla is acito nrac sismteabshi dispachdeba mere offtypes sashvalebit vpiltravt da vigebt yvela im acitons
-  // concat mepidan wian observablsi moancemebs
-  // daividzaxebt servis da gadavcemt hvens payoad
 }

@@ -31,11 +31,16 @@ export class RevenueAnalysisComponent {
   chartCategoryDataisLoading: boolean = false;
 
   onDateChanged(dateRange: DateRange) {
+    this.categoryChartData$.subscribe((data) => {
+      console.log(data);
+    });
+
+    this.dateRange = dateRange;
     // this.loadCategoryChartdata(dateRange);
     // this.loadIntensityChartData(dateRange);
     this.store.dispatch(
       RevenueAnalysisActions.searchClicked({
-        payLoadOfDateRange: dateRange,
+        dateRangeFromForm: dateRange,
       })
     );
   }

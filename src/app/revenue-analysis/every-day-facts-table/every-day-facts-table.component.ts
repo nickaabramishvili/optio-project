@@ -46,6 +46,7 @@ export class EveryDayFactsTableComponent implements AfterViewInit, OnChanges {
     if (changes['dateRange'].currentValue.startDate) {
       this.dateRange$.next(this.dateRange);
     }
+    console.log(this.dateRange);
   }
 
   loading$ = new BehaviorSubject<boolean>(false);
@@ -60,6 +61,7 @@ export class EveryDayFactsTableComponent implements AfterViewInit, OnChanges {
   ];
   resultsLength = 0;
   data: PeriodicElement[] = [];
+  // @Input() data : PeriodicElement[] = []
 
   constructor(private factsService: FactsService) {}
 
@@ -90,12 +92,21 @@ export class EveryDayFactsTableComponent implements AfterViewInit, OnChanges {
           }
 
           this.resultsLength = response.data.total;
+          console.log(response);
+          console.log(
+            this.sort.active,
+            this.sort.direction,
+            this.paginator.pageIndex
+          );
+
           return response.data.entities;
         })
       )
       .subscribe((data) => {
         this.data = data;
         this.loading$.next(false);
+        console.log(data);
+        console.log(data);
       });
   }
 }

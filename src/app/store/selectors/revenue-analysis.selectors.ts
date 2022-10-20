@@ -19,13 +19,18 @@ export const selectRevenueAnalysisIntensityChartData = createSelector(
   revenueAnalysisState,
 
   (state) => {
-    return state.intensityChartData
+    return state.intensityChartData;
     // arsebuls masivs gadauvlsi da daaa brunebs axals da shecvlils itemebs
   }
 );
 // magla pirvelsh ishevqmen istate da mere imena selctor shevqmeni state gadaveci da arrow funqciashi vabruneb state is mnishvnelobas
 // da mag (state ) shi ro vigebt rasac gvinda iams vuzamt state vichiravs ukve
-
+export const selectRevenueAnalysisTableData = createSelector(
+  revenueAnalysisState,
+  (state) => {
+    return state.tableData;
+  }
+);
 export const selectLoadingStatus = createSelector(
   revenueAnalysisState,
   (state) => {
