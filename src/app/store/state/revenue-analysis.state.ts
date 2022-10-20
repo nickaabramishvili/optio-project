@@ -3,10 +3,12 @@ import { TableDisplayedData } from 'src/app/shared/models/table-displayed-data.m
 import { TransactionItem } from 'src/app/shared/models/transaction-item.model';
 
 export interface RevenueAnalysisState {
-  loading: boolean;
-  filterDateRange: DateRange | null;
   categoryChartData: TransactionItem[];
   intensityChartData: TransactionItem[];
   tableData: TableDisplayedData;
+  filterDateRange: DateRange | null;
+  loadingForCategoriesChart: false;
+  loadingForIntensityChart: false;
+  loadingforTable: false;
   // f2 s r odaawve yvelgan mtel reposhi yvelga ngadaarqmevs
 }

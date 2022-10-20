@@ -6,14 +6,16 @@ import { RevenueAnalysisState } from '../state';
 export const initialState: RevenueAnalysisState = {
   categoryChartData: [],
   intensityChartData: [],
-  filterDateRange: null,
-  loading: false,
   tableData: {
     dateRangeFromForm: null,
     sortBy: null,
     sortDirection: null,
     pageIndex: null,
   },
+  filterDateRange: null,
+  loadingForCategoriesChart: false,
+  loadingForIntensityChart: false,
+  loadingforTable: false,
 };
 
 export const RevenueAnalysisReducer = createReducer(
@@ -24,7 +26,6 @@ export const RevenueAnalysisReducer = createReducer(
     (state, { dateRangeFromForm }): RevenueAnalysisState => {
       return {
         ...state,
-        loading: true,
         filterDateRange: dateRangeFromForm,
       };
     }
@@ -34,7 +35,6 @@ export const RevenueAnalysisReducer = createReducer(
     (state, { payLoad }): RevenueAnalysisState => {
       return {
         ...state,
-        loading: false,
       };
     }
   ),
@@ -47,7 +47,6 @@ export const RevenueAnalysisReducer = createReducer(
       delay(2000);
       return {
         ...state,
-        loading: false,
         categoryChartData: categoryChartData,
         intensityChartData: intensityChartData,
       };

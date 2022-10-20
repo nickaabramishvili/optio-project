@@ -31,10 +31,22 @@ export const selectRevenueAnalysisTableData = createSelector(
     return state.tableData;
   }
 );
-export const selectLoadingStatus = createSelector(
+export const selectLoadingStatusForIntensitychart = createSelector(
   revenueAnalysisState,
   (state) => {
-    return state.loading;
+    return state.loadingForIntensityChart;
+  }
+);
+export const selectLoadingStatusForCategorieschart = createSelector(
+  revenueAnalysisState,
+  (state) => {
+    return state.loadingForCategoriesChart;
+  }
+);
+export const selectLoadingStatusForTable = createSelector(
+  revenueAnalysisState,
+  (state) => {
+    return state.loadingforTable;
   }
 );
 

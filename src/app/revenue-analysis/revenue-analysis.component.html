@@ -4,19 +4,20 @@
 <div class="charts-wrapper">
   <app-revenue-categories-chart
     [data]="categoryChartData$ | async"
-    [loading]="loading$ | async"
+    [loading]="LoadingStatusForCategorieschart$ | async"
   >
   </app-revenue-categories-chart>
   <app-revenue-intensity-chart 
     [data]="intensityChartData$ | async"
     [dateRange]="dateRangeFromFilterData$ | async"
-    [loading]="loading$ | async"
+    [loading]="LoadingStatusForIntensitychart$ | async"
   ></app-revenue-intensity-chart>
 </div>
 
 <div class="table-wrapper">
   <app-every-day-facts-table
   [dateRange]="dateRange"
+  [loading]="LoadingStatusForTable$ | async"
   ></app-every-day-facts-table>
 </div>
 <div> ASASASA | lowercase </div>

@@ -42,6 +42,8 @@ export class EveryDayFactsTableComponent implements AfterViewInit, OnChanges {
 
   @Input() dateRange!: DateRange;
 
+  @Input() loading!: boolean | null;
+
   ngOnChanges(changes: SimpleChanges) {
     if (changes['dateRange'].currentValue.startDate) {
       this.dateRange$.next(this.dateRange);

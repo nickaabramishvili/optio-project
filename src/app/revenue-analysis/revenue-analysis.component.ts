@@ -24,7 +24,16 @@ export class RevenueAnalysisComponent {
   dateRangeFromFilterData$ = this.store.select(
     RevenueAnalysisSelectors.selectFilterDateRange
   );
-  loading$ = this.store.select(RevenueAnalysisSelectors.selectLoadingStatus);
+  LoadingStatusForCategorieschart$ = this.store.select(
+    RevenueAnalysisSelectors.selectLoadingStatusForCategorieschart
+  );
+  LoadingStatusForIntensitychart$ = this.store.select(
+    RevenueAnalysisSelectors.selectLoadingStatusForIntensitychart
+  );
+  LoadingStatusForTable$ = this.store.select(
+    RevenueAnalysisSelectors.selectLoadingStatusForTable
+  );
+
   dateRange: DateRange = { startDate: null, endDate: null };
   chartCategoryData: CategoriesChartData[] = [];
   chartIntensData: TransactionItem[] = [];
