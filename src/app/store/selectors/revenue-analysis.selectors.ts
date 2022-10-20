@@ -32,6 +32,12 @@ export const selectRevenueAnalysisTableData = createSelector(
     return state.tableData;
   }
 );
+export const selectRevenueAnalysisTableDataLength = createSelector(
+  revenueAnalysisState,
+  (state) => {
+    return state.tableDataLength;
+  }
+);
 export const selectLoadingStatusForIntensitychart = createSelector(
   revenueAnalysisState,
   (state) => {

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { DateRange } from '../../shared/models/date-range.model';
-import { FactsByDayPagination } from '../../shared/models/facts-by-day-pagination.model';
+import { SortData } from '../../shared/models/facts-by-day-pagination.model';
 import { TransactionsResponse } from '../models/transactions-response.model';
 import { FactsByDayResponse } from '../models/facts-by-day-response.model';
 
@@ -34,7 +34,7 @@ export class FactsService {
   // for table
   getTableData(
     dateRange: DateRange,
-    { pageIndex, sortBy, sortDirection }: FactsByDayPagination
+    { pageIndex, sortBy, sortDirection }: SortData
   ): Observable<FactsByDayResponse> {
     return this.httpClient.post<FactsByDayResponse>(
       `${environment.apiBaseUrl}${environment.factsByDay}`,

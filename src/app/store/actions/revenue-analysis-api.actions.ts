@@ -1,4 +1,5 @@
 import { createAction, props } from '@ngrx/store';
+import { PeriodicElement } from 'src/app/shared/models/table-data.model';
 import { TransactionItem } from 'src/app/shared/models/transaction-item.model';
 
 export const categoryDataSuccess = createAction(
@@ -22,5 +23,18 @@ export const intensityDataSuccess = createAction(
 
 export const intensityDataFailed = createAction(
   '[Revenue Analysis Api] Intensity Data Failed',
+  props<{ payLoad: any }>()
+);
+
+export const tableDataSuccess = createAction(
+  '[Revenue Analysis Api] Table Data Success',
+  props<{
+    data: PeriodicElement[];
+    dataLength: number;
+  }>()
+);
+
+export const tableDataFailed = createAction(
+  '[Revenue Analysis Api] Table Data Failed',
   props<{ payLoad: any }>()
 );

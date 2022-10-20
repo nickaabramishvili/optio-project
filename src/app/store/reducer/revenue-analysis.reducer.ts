@@ -5,12 +5,8 @@ import { RevenueAnalysisState } from '../state';
 export const initialState: RevenueAnalysisState = {
   categoryChartData: [],
   intensityChartData: [],
-  tableData: {
-    dateRangeFromForm: null,
-    sortBy: null,
-    sortDirection: null,
-    pageIndex: null,
-  },
+  tableData: [],
+  tableDataLength: 0,
   filterDateRange: null,
   loadingForCategoriesChart: false,
   loadingForIntensityChart: false,
@@ -32,6 +28,16 @@ export const RevenueAnalysisReducer = createReducer(
       };
     }
   ),
+  on(
+    RevenueAnalysisActions.sortChanged,
+    (state, { sortData }): RevenueAnalysisState => {
+      return {
+        ...state,
+        loadingforTable: true,
+      };
+    }
+  ),
+
   on(
     RevenueAnalysisApiActions.categoryDataFailed,
     (state, { payLoad }): RevenueAnalysisState => {
@@ -71,6 +77,26 @@ export const RevenueAnalysisReducer = createReducer(
   ),
   on(
     RevenueAnalysisApiActions.intensityDataFailed,
+    (state, { payLoad }): RevenueAnalysisState => {
+      return {
+        ...state,
+        loadingForIntensityChart: false,
+      };
+    }
+  ),
+  on(
+    RevenueAnalysisApiActions.tableDataSuccess,
+    (state, { data, dataLength }): RevenueAnalysisState => {
+      return {
+        ...state,
+        tableData: data,
+        tableDataLength: dataLength,
+        loadingforTable: false,
+      };
+    }
+  ),
+  on(
+    RevenueAnalysisApiActions.tableDataFailed,
     (state, { payLoad }): RevenueAnalysisState => {
       return {
         ...state,

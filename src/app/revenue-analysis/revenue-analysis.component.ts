@@ -7,6 +7,7 @@ import { TransactionItem } from '../shared/models/transaction-item.model';
 import { Store } from '@ngrx/store';
 import { RevenueAnalysisActions } from '../store/actions';
 import { RevenueAnalysisSelectors } from '../store/selectors';
+import { SortData } from '../shared/models/facts-by-day-pagination.model';
 @Component({
   selector: 'app-revenue-analysis',
   templateUrl: './revenue-analysis.component.html',
@@ -21,6 +22,13 @@ export class RevenueAnalysisComponent {
   intensityChartData$ = this.store.select(
     RevenueAnalysisSelectors.selectRevenueAnalysisIntensityChartData
   );
+  tableData$ = this.store.select(
+    RevenueAnalysisSelectors.selectRevenueAnalysisTableData
+  );
+  tableDataLength$ = this.store.select(
+    RevenueAnalysisSelectors.selectRevenueAnalysisTableDataLength
+  );
+
   dateRangeFromFilterData$ = this.store.select(
     RevenueAnalysisSelectors.selectFilterDateRange
   );
@@ -50,6 +58,19 @@ export class RevenueAnalysisComponent {
     this.store.dispatch(
       RevenueAnalysisActions.searchClicked({
         dateRangeFromForm: dateRange,
+      })
+    );
+  }
+  onSortChanged(sortData: any) {
+    console.log(sortData);
+    this.store.dispatch(
+      RevenueAnalysisActions.sortChanged({
+        sortData: {
+          sortBy: sortData.active,
+          sortDirection: sortData.direction,
+          // iqidan sxvanairad brundeba da q statikurad gadavawere da ise shevinaxe
+        },
+        dateRange: this.dateRange,
       })
     );
   }

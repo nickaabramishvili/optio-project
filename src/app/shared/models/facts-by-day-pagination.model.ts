@@ -1,5 +1,5 @@
-export interface FactsByDayPagination {
-  pageIndex: number;
+export interface SortData {
+  pageIndex?: number;
   sortBy: string;
   sortDirection: string;
 }

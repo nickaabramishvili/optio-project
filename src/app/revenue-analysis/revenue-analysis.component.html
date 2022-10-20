@@ -16,8 +16,10 @@
 
 <div class="table-wrapper">
   <app-every-day-facts-table
-  [dateRange]="dateRange"
+  [tableData]="tableData$ | async"
+  [tableDataLength]="tableDataLength$ | async"
   [loading]="LoadingStatusForTable$ | async"
+  (sortChanged)="onSortChanged($event)"
   ></app-every-day-facts-table>
 </div>
 <div> ASASASA | lowercase </div>

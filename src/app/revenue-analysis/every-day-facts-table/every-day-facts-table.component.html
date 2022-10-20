@@ -1,11 +1,14 @@
-<div class="mat-elevation-z8">
+<div class="mat-elevation-z8" *ngIf="tableData">
+  <mat-spinner class="spinner" *ngIf="loading"></mat-spinner>
+
   <table
     mat-table
-    [dataSource]="data"
+    [dataSource]="tableData"
     matSort
     matSortActive="date"
     matSortDisableClear
     matSortDirection="asc"
+    (matSortChange)="onSortChanged($event)"
   >
     <ng-container matColumnDef="dimension">
       <th
@@ -99,10 +102,9 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
 
-  <mat-spinner class="spinner" *ngIf="loading$ | async"></mat-spinner>
 
   <mat-paginator
-    [length]="resultsLength"
+    [length]="tableDataLength"
     [pageSize]="50"
     aria-label="Select page elements"
   >

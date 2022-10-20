@@ -43,4 +43,49 @@ export class RevenueAnalysisEffects {
       })
     );
   });
+
+  tableData$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(RevenueAnalysisActions.searchClicked),
+      concatMap(({ dateRangeFromForm }) => {
+        // concatmapshi gadamomecema am observablis bolo value
+        return this.service
+          .getTableData(dateRangeFromForm, {
+            pageIndex: 0,
+            sortBy: 'date',
+            sortDirection: 'asc',
+          })
+          .pipe(
+            map((tableResponse) => {
+              return RevenueAnalysisApiActions.tableDataSuccess({
+                data: tableResponse.data.entities,
+                dataLength: tableResponse.data.total,
+              });
+            })
+          );
+      })
+    );
+  });
+  tableSortData$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(RevenueAnalysisActions.sortChanged),
+      concatMap(({ sortData, dateRange }) => {
+        // concatmapshi gadamomecema am observablis bolo value
+        return this.service
+          .getTableData(dateRange, {
+            pageIndex: 0,
+            sortBy: sortData.sortBy,
+            sortDirection: sortData.sortDirection,
+          })
+          .pipe(
+            map((tableResponse) => {
+              return RevenueAnalysisApiActions.tableDataSuccess({
+                data: tableResponse.data.entities,
+                dataLength: tableResponse.data.total,
+              });
+            })
+          );
+      })
+    );
+  });
 }
