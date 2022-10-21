@@ -48,18 +48,18 @@ export class RevenueAnalysisComponent {
   chartCategoryDataisLoading: boolean = false;
 
   onDateChanged(dateRange: DateRange) {
-    this.categoryChartData$.subscribe((data) => {
-      console.log(data);
-    });
-
-    this.dateRange = dateRange;
-    // this.loadCategoryChartdata(dateRange);
-    // this.loadIntensityChartData(dateRange);
+    // this.categoryChartData$.subscribe((data) => {
+    //   console.log(data);
+    // });
+    console.log(dateRange);
     this.store.dispatch(
       RevenueAnalysisActions.searchClicked({
         dateRangeFromForm: dateRange,
       })
     );
+    this.categoryChartData$.subscribe((res) => {
+      console.log(res);
+    });
   }
   onSortChanged(sortData: any) {
     console.log(sortData);

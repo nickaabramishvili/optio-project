@@ -29,6 +29,7 @@ export class RevenueIntensityChartComponent
   @Input() data: TransactionItem[] | null = [];
 
   @Input() loading!: boolean | null;
+
   option: any = {
     tooltip: {},
     visualMap: {
@@ -52,11 +53,7 @@ export class RevenueIntensityChartComponent
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.myChart && changes['data']) {
-      if (!this.myChart) {
-        return;
-      }
-
+    if (changes['data']) {
       // es piroba aris amosagebi ar
 
       this.option.calendar = [];
@@ -102,17 +99,13 @@ export class RevenueIntensityChartComponent
         index += 1;
       }
 
-      this.myChart.setOption(this.option, true);
+      this.myChart?.setOption(this.option, true);
     }
-    const dateRange = changes['dateRange'];
-    if (
-      dateRange &&
-      dateRange.currentValue?.startDate &&
-      dateRange.currentValue?.endDate
-    ) {
+    // const dateRange = changes['dateRange'];
+    if (this.dateRange) {
       this.dateRanges = {};
-      const startDate = moment(dateRange.currentValue.startDate);
-      const endDate = moment(dateRange.currentValue.endDate);
+      const startDate = moment(this.dateRange.startDate);
+      const endDate = moment(this.dateRange.endDate);
 
       const isOneMonth = startDate.isSame(endDate, 'month');
       while (

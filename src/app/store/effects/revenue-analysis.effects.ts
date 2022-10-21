@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { concatMap, forkJoin, map, pipe } from 'rxjs';
+import { concatMap, map } from 'rxjs';
 import { FactsService } from 'src/app/shared/services/facts.service';
 import { RevenueAnalysisActions, RevenueAnalysisApiActions } from '../actions';
 
@@ -12,10 +12,10 @@ export class RevenueAnalysisEffects {
       ofType(RevenueAnalysisActions.searchClicked),
       concatMap(({ dateRangeFromForm }) => {
         // concatmapshi gadamomecema am observablis bolo value
-
         return this.service.getChartsData('category', dateRangeFromForm).pipe(
           map((categoriesChartResponse) => {
-            //
+            console.log(categoriesChartResponse);
+            console.log('from categoriesChartResponse');
             return RevenueAnalysisApiActions.categoryDataSuccess({
               data: categoriesChartResponse.data,
               // intensityChartData: intensityChartResponse.data,
@@ -30,11 +30,10 @@ export class RevenueAnalysisEffects {
     return this.actions$.pipe(
       ofType(RevenueAnalysisActions.searchClicked),
       concatMap(({ dateRangeFromForm }) => {
-        // concatmapshi gadamomecema am observablis bolo value
-
         return this.service.getChartsData('date', dateRangeFromForm).pipe(
           map((intensityChartResponse) => {
-            //
+            console.log(intensityChartResponse);
+            console.log('from intensityChartResponse');
             return RevenueAnalysisApiActions.intensityDataSuccess({
               data: intensityChartResponse.data,
             });

@@ -24,10 +24,8 @@ export class RevenueCategoriesChartComponent
   @Input() data!: CategoriesChartData[] | null;
 
   ngOnChanges(changes: SimpleChanges) {
-    if (this.myChart && changes['data']) {
-      this.option.series[0].data = this.data;
-      this.myChart.setOption(this.option, true);
-    }
+    this.option.series[0].data = this.data;
+    this.myChart?.setOption(this.option, true);
   }
 
   myChart: any;
